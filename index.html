@@ -88,25 +88,31 @@
     class="bg-gray-100 text-gray-800 font-sans selection:bg-primary selection:text-white"
   >
     <!-- Top Navigation -->
-    <nav
-      class="bg-white shadow-md sticky top-0 z-50 border-b-2 border-blue-100"
-    >
-      <div
-        class="container mx-auto px-4 py-3 flex justify-between items-center"
-      >
-        <!-- Logo -->
-        <div class="flex items-center gap-2 group cursor-pointer">
-          <div
-            class="bg-primary text-white p-2 rounded-lg transform group-hover:-skew-x-12 transition duration-300 shadow-lg"
-          >
-            <i class="fa-solid fa-mobile-screen-button text-xl"></i>
-          </div>
-          <h1
-            class="text-3xl font-display font-extrabold text-gray-900 tracking-tighter uppercase italic"
-          >
-            Phonify
-          </h1>
-        </div>
+<nav class="bg-white sticky top-0 z-50 border-blue-100">
+  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+
+    <!-- Logo -->
+    <div class="flex flex-col items-start group cursor-pointer">
+
+      <div class="flex items-center gap-2">
+        
+      <!-- Logo Image at Bottom -->
+      <img
+        src="/images/phonify_logo.jpg"
+        alt="Phonify Logo"
+        style="border-radius: 25px;"
+        class="h-10 mt-1 opacity-90 group-hover:opacity-100 transition"
+      />
+       
+
+        <h1
+          class="text-3xl font-display font-extrabold text-gray-900 tracking-tighter uppercase italic"
+        >
+          Phonify
+        </h1>
+      </div>
+
+    </div>
 
         <!-- Search Bar (Sporty Pill Shape) -->
         <div class="hidden md:flex flex-1 mx-12 max-w-xl relative">
@@ -124,20 +130,15 @@
 
         <!-- Actions -->
         <div class="flex items-center gap-6">
-          <a
-            href="#"
-            class="hidden md:flex items-center gap-2 font-bold text-gray-700 hover:text-primary transition uppercase text-sm"
-          >
-            <i class="fa-solid fa-user"></i> Login
-          </a>
+       
           <a
             href="#"
             class="flex items-center gap-2 hover:text-primary relative group"
           >
             <div class="relative">
-              <i
-                class="fa-solid fa-cart-shopping text-2xl group-hover:scale-110 transition"
-              ></i>
+             <i
+    class="fa-solid fa-heart text-2xl group-hover:scale-110 transition"
+></i>
               <span
                 class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white"
                 >0</span
@@ -163,7 +164,34 @@
         </div>
       </div>
     </nav>
+     <div class="bg-white border-b border-gray-200  hidden md:block">
+        <div class="container mx-auto px-4 flex items-center justify-center gap-10 py-3">
+            <a href="index.html" class="text-gray-700 font-display font-bold hover:text-primary transition text-sm uppercase tracking-wide">Home</a>
+            
+            <a href="#" class="transform hover:scale-105 transition group">
+                <!-- Custom CSS Graphic for 'BIG SALE' to match image without external assets -->
+                 <div class="flex items-center leading-none relative">
+                    <span class="text-yellow-400 font-black text-2xl italic transform -skew-x-12" style="text-shadow: 2px 2px 0 #000; -webkit-text-stroke: 1px black;">BIG</span>
+                    <span class="absolute -top-3 -right-4 bg-red-600 text-white font-black text-[10px] px-1.5 py-0.5 transform rotate-12 shadow-sm border border-white">SALE</span>
+                </div>
+            </a>
 
+            <a href="#" class="text-gray-700 font-display font-bold hover:text-primary transition text-sm uppercase tracking-wide">Exchange</a>
+            <a href="#" class="text-gray-700 font-display font-bold hover:text-primary transition text-sm uppercase tracking-wide">Accessories</a>
+            
+            <a href="#" class="flex items-center gap-2 text-red-600 font-display font-black hover:text-red-700 transition text-sm uppercase tracking-wide">
+                <i class="fa-solid fa-fire text-lg animate-pulse"></i> Hot Deals
+            </a>
+        </div>
+    </div>
+ <div class="md:hidden bg-white border-b border-gray-200 overflow-x-auto py-3 px-4 no-scrollbar">
+        <div class="flex gap-6 text-sm font-bold text-gray-700 whitespace-nowrap items-center">
+            <a href="index.html" class="hover:text-primary">Home</a>
+            <a href="#" class="text-yellow-600 font-black italic">BIG SALE</a>
+            <a href="#">Exchange</a>
+            <a href="#" class="text-red-600 flex items-center gap-1"><i class="fa-solid fa-fire"></i> Hot Deals</a>
+        </div>
+    </div>
     <!-- Hero Banner Section -->
     <section class="container mx-auto px-4 mt-6">
       <div
@@ -249,74 +277,7 @@
     </section>
 
     <!-- Service Icons Bar (Sporty/Tech Style) -->
-    <section class="container mx-auto px-4 py-10">
-      <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-        <!-- Item 1 -->
-        <div
-          class="flex flex-col items-center text-center p-5 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition hover:-translate-y-1"
-        >
-          <div
-            class="bg-green-100 text-green-600 w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3"
-          >
-            <i class="fa-solid fa-shield-halved"></i>
-          </div>
-          <h4 class="font-display font-bold text-gray-900 uppercase">
-            Secured Payment
-          </h4>
-          <p class="text-xs text-gray-500 font-medium mt-1">
-            100% Secure Transaction
-          </p>
-        </div>
-        <!-- Item 2 -->
-        <div
-          class="flex flex-col items-center text-center p-5 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition hover:-translate-y-1"
-        >
-          <div
-            class="bg-yellow-100 text-yellow-600 w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3"
-          >
-            <i class="fa-solid fa-hand-holding-dollar"></i>
-          </div>
-          <h4 class="font-display font-bold text-gray-900 uppercase">
-            5 Day Refund
-          </h4>
-          <p class="text-xs text-gray-500 font-medium mt-1">
-            Money Back Guarantee
-          </p>
-        </div>
-        <!-- Item 3 -->
-        <div
-          class="flex flex-col items-center text-center p-5 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition hover:-translate-y-1"
-        >
-          <div
-            class="bg-blue-100 text-blue-600 w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3"
-          >
-            <i class="fa-solid fa-headset"></i>
-          </div>
-          <h4 class="font-display font-bold text-gray-900 uppercase">
-            24/7 Support
-          </h4>
-          <p class="text-xs text-gray-500 font-medium mt-1">
-            Expert Assistance
-          </p>
-        </div>
-        <!-- Item 4 -->
-        <div
-          class="flex flex-col items-center text-center p-5 bg-white rounded-2xl shadow-sm border border-gray-100 hover:shadow-md transition hover:-translate-y-1"
-        >
-          <div
-            class="bg-orange-100 text-orange-600 w-12 h-12 rounded-full flex items-center justify-center text-2xl mb-3"
-          >
-            <i class="fa-solid fa-truck-fast"></i>
-          </div>
-          <h4 class="font-display font-bold text-gray-900 uppercase">
-            Fast Delivery
-          </h4>
-          <p class="text-xs text-gray-500 font-medium mt-1">
-            Pan India Shipping
-          </p>
-        </div>
-      </div>
-    </section>
+
 
     <!-- NEW SECTION: Shop By Brand -->
     <section class="container mx-auto px-4 py-4">
@@ -470,6 +431,9 @@
     <section
       class="container mx-auto px-4 py-12 bg-white mt-8 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.05)]"
     >
+
+
+
       <div
         class="flex justify-between items-end mb-8 border-b-2 border-gray-100 pb-2"
       >
@@ -505,21 +469,18 @@
             <span class="text-primary">Premium Pre-Owned Mobiles.</span>
           </h2>
           <div class="w-20 h-1 bg-primary rounded-full"></div>
-          <p class="text-gray-600 text-lg leading-relaxed font-medium">
-            Phonify is a smartphone expert and leading industry player focused
-            on delivering quality products at the most affordable prices. We
-            ensure the best quality products passed from
-            <span class="text-gray-900 font-bold bg-yellow-100 px-1"
-              >50+ strict quality checks.</span
-            >
-          </p>
+       <p class="text-gray-600 text-lg leading-relaxed font-medium">
+    Phonify is your trusted smartphone destination, bringing you premium devices without the premium price tag. Every product undergoes 
+    <span class="text-gray-900 font-bold bg-yellow-100 px-1">50+ rigorous quality checks</span> 
+    to guarantee excellence in your hands.
+</p>
 <div class="mt-8">
   <video
     src="phonify_unboxing.mp4"
     autoplay
     loop
     muted
-    
+    onloadeddata="this.playbackRate = 0.5"
     class="rounded-2xl shadow-md h-64 w-full md:w-4/6 object-cover"
     style="object-position: center;"
   ></video>
@@ -595,19 +556,25 @@
           <!-- Brand & Description -->
           <div>
             <div class="flex items-center gap-2 mb-6">
-              <div class="bg-primary text-white p-2 rounded-lg">
-                <i class="fa-solid fa-mobile-screen-button"></i>
-              </div>
+        
+      <!-- Logo Image at Bottom -->
+      <img
+        src="/images/phonify_logo.jpg"
+        alt="Phonify Logo"
+        style="border-radius: 25px;"
+        class="h-10 mt-1 opacity-90 group-hover:opacity-100 transition"
+      />
+      
               <h2
                 class="text-2xl font-display font-black text-white uppercase italic"
               >
                 Phonify
               </h2>
             </div>
-            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-              West Bengal's largest tech hub for premium pre-owned smartphones.
-              Quality checked, warranty backed, and customer approved.
-            </p>
+           <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+    West Bengal's premier destination for certified pre-owned smartphones. 
+    <span class="text-gray-300 font-semibold">Expertly refurbished • Warranty guaranteed • Loved by thousands</span>
+</p>
 
             <div
               class="flex items-center gap-4 mt-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700"
@@ -620,7 +587,7 @@
                   Support 24/7
                 </p>
                 <p class="text-xl font-display font-bold text-white">
-                  8017999888
+                  
                 </p>
               </div>
             </div>
@@ -641,20 +608,8 @@
                   >About Us</a
                 >
               </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Careers</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Refund Policy</a
-                >
-              </li>
+              
+           
               <li>
                 <a
                   href="#"
@@ -694,13 +649,7 @@
                   >Terms & Conditions</a
                 >
               </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Shipping Policy</a
-                >
-              </li>
+         
               <li>
                 <a
                   href="#"
@@ -723,8 +672,7 @@
                 <i class="fa-solid fa-location-dot"></i>
               </div>
               <p class="text-sm text-gray-400 leading-relaxed">
-                M-1/81, H Road, Anandapuri,<br />
-                Anandadeep Apartment,<br />
+              
                 Barrackpore, Kolkata 700122
               </p>
             </div>
@@ -777,7 +725,7 @@
     </footer>
 
     <!-- JavaScript to Render Cards Dynamically -->
-    <script>
+   <script>
       // Data mirroring the "Hot Deal" image
       const hotDeals = [
         {
@@ -788,7 +736,7 @@
           oldPrice: 9999,
           discount: "65% OFF",
           quality: "Mint",
-          location: "BRACK",
+          location: "Barrackpore",
           left: 88,
           badgeColor: "bg-blue-600",
         },
@@ -800,7 +748,7 @@
           oldPrice: 32999,
           discount: "52% OFF",
           quality: "Super Mint",
-          location: "DAKSHIN",
+          location: "Barrackpore",
           left: 23,
           badgeColor: "bg-primary",
         },
@@ -812,7 +760,7 @@
           oldPrice: 25990,
           discount: "69% OFF",
           quality: "Mint",
-          location: "BASIRHAT",
+          location: "Barrackpore",
           left: 52,
           badgeColor: "bg-primary",
         },
@@ -824,7 +772,7 @@
           oldPrice: 24999,
           discount: "50% OFF",
           quality: "Mint",
-          location: "SANTIPUR",
+          location: "BARRACKPORE",
           left: 40,
           badgeColor: "bg-primary",
         },
@@ -840,7 +788,7 @@
           oldPrice: 22999,
           discount: "61% OFF",
           quality: "Mint",
-          location: "SERAMPORE",
+          location: "BARRACKPORE",
           save: "₹13999 Off",
           badgeColor: "bg-primary",
         },
@@ -873,24 +821,21 @@
       // Render Hot Deals
       const hotDealsContainer = document.getElementById("hot-deals-container");
       hotDeals.forEach((product) => {
+        // I added a URL parameter (product=Name) so you can identify which phone was clicked
         const card = `
-                <div class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full">
+                <a href="productDetails.html?product=${encodeURIComponent(product.name)}" class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full block">
                     
-                    <!-- Discount Badge (Sporty Slant) -->
                     <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1">
                         ${product.discount}
                     </span>
 
-                    <!-- Image Area -->
                     <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
                          <img src="${product.image}" alt="${
           product.name
         }" class="h-full object-contain group-hover:scale-105 transition duration-500 drop-shadow-md">
                     </div>
 
-                    <!-- Content Area -->
                     <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
-                        <!-- Titles -->
                         <div class="mb-3">
                             <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase">
                                 ${product.name}
@@ -900,9 +845,7 @@
                              }</p>
                         </div>
                         
-                        <!-- Badges Grid -->
                         <div class="space-y-2 mb-3">
-                            <!-- Stock Left -->
                             ${
                               product.left
                                 ? `
@@ -914,7 +857,6 @@
                                 : ""
                             }
                             
-                            <!-- Quality -->
                             <div class="flex items-center text-xs font-semibold">
                                 <span class="text-gray-400 mr-1">Quality:</span>
                                 <span class="text-primary uppercase tracking-wide">${
@@ -922,8 +864,7 @@
                                 }</span>
                             </div>
 
-                            <!-- Location -->
-                             <div>
+                            <div>
                                 <span class="bg-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider inline-block">
                                     <i class="fa-solid fa-map-pin mr-1"></i> ${
                                       product.location
@@ -932,7 +873,6 @@
                             </div>
                         </div>
 
-                        <!-- Price Section (Push to bottom) -->
                         <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
                             <span class="text-2xl font-display font-black text-primary">₹${
                               product.price
@@ -942,7 +882,7 @@
                             }</span>
                         </div>
                     </div>
-                </div>
+                </a>
             `;
         hotDealsContainer.innerHTML += card;
       });
@@ -950,22 +890,20 @@
       // Render Recommended
       const recContainer = document.getElementById("recommended-container");
       recommended.forEach((product) => {
+         // I added a URL parameter (product=Name) here as well
         const card = `
-                 <div class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 overflow-hidden relative group flex">
+                 <a href="productDetails.html?product=${encodeURIComponent(product.name)}" class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 overflow-hidden relative group flex block">
                     
-                    <!-- Discount Badge -->
                     <span class="absolute top-0 left-0 bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded-br-lg z-10 uppercase tracking-widest">
                         ${product.discount}
                     </span>
 
-                    <!-- Image Area -->
                     <div class="w-1/3 p-2 bg-white flex items-center justify-center">
                          <img src="${product.image}" alt="${
           product.name
         }" class="max-h-32 max-w-full object-contain drop-shadow-sm">
                     </div>
 
-                    <!-- Content Area -->
                     <div class="w-2/3 p-4 flex flex-col justify-center">
                         <h3 class="font-display font-bold text-gray-900 text-base leading-tight uppercase mb-1">
                             ${product.name}
@@ -974,7 +912,6 @@
                            product.detail
                          }</p>
                         
-                        <!-- Save Badge (Orange) -->
                         ${
                           product.save
                             ? `<div class="mb-2"><span class="bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-sm inline-block transform -skew-x-12 shadow-sm">SAVE ${product.save}</span></div>`
@@ -990,12 +927,12 @@
                                   product.oldPrice
                                 }</span>
                             </div>
-                             <button class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-primaryDark shadow-md transition hover:scale-110">
+                             <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-primaryDark shadow-md transition hover:scale-110">
                                 <i class="fa-solid fa-plus"></i>
-                            </button>
+                            </div>
                         </div>
                     </div>
-                </div>
+                </a>
             `;
         recContainer.innerHTML += card;
       });

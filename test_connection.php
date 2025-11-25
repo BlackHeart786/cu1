@@ -20,7 +20,7 @@ if ($db) {
     }
 
 } else {
-    echo "<h2>❌ Database Connection Failed.</h2>";
+    echo "<h2> Database Connection Failed.</h2>";
 }
 
 $db = null; 
