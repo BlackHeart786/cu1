@@ -3,18 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>OPPO K10 5G - Phonify Product Details</title>
+    <title>iPhone 17 Pro Max - Phonify Product Details</title>
     
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
-    <!-- Font Awesome for Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    <!-- Google Fonts: Exo 2 (Sporty Headers) and Rajdhani (Body) -->
     <link href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=Rajdhani:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-    <!-- Custom Config to match the Blue Tech Theme -->
     <script>
         tailwind.config = {
             theme: {
@@ -24,491 +20,560 @@
                         display: ['Exo 2', 'sans-serif'],
                     },
                     colors: {
-                        primary: '#2563eb', // Blue-600
-                        primaryDark: '#1d4ed8', // Blue-700
-                        secondary: '#06b6d4', // Cyan-500
-                        darkBg: '#0f172a', // Slate-900 for footer
-                        brandYellow: '#f59e0b', // Amber-500 for accents
+                        primary: '#2563eb', 
+                        primaryDark: '#1d4ed8', 
+                        secondary: '#06b6d4', 
+                        darkBg: '#0f172a', 
+                        brandYellow: '#f59e0b', 
                     },
-                    skew: {
-                        '-12': '-12deg',
-                    }
                 }
             }
         }
     </script>
 
     <style>
-        /* Custom Styles from Index */
-        .badge-sport {
-            clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
-        }
-        .btn-sport {
-             clip-path: polygon(0 0, 100% 0, 95% 100%, 5% 100%);
-        }
-        /* Custom Scrollbar */
+        .badge-sport { clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%); }
         ::-webkit-scrollbar { width: 8px; }
         ::-webkit-scrollbar-track { background: #f1f1f1; }
         ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 4px; }
-        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
         
-        /* Active State for Thumbnails */
         .thumb-active {
             border-color: #2563eb;
             opacity: 1;
         }
+        .price-update-anim {
+            animation: fadeIn 0.5s;
+        }
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(-5px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        /* Modal Animation */
+        .modal-enter { opacity: 0; transform: scale(0.9); }
+        .modal-enter-active { opacity: 1; transform: scale(1); transition: opacity 0.3s, transform 0.3s; }
+        .modal-exit { opacity: 1; transform: scale(1); }
+        .modal-exit-active { opacity: 0; transform: scale(0.9); transition: opacity 0.3s, transform 0.3s; }
     </style>
 </head>
-<body class="bg-gray-50 text-gray-800 font-sans selection:bg-primary selection:text-white">
+<body class="bg-gray-50 text-gray-800 font-sans selection:bg-primary selection:text-white relative">
 
-    <!-- Top Navigation (Identical to Index) -->
-    <nav class="bg-white shadow-md sticky top-0 z-50 border-b-2 border-blue-100">
-      <nav class="bg-white sticky top-0 z-50 border-blue-100">
-  <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+    <div id="bookingModal" class="fixed inset-0 z-[100] hidden" aria-labelledby="modal-title" role="dialog" aria-modal="true">
+        <div class="fixed inset-0 bg-gray-900 bg-opacity-75 transition-opacity backdrop-blur-sm" onclick="closeModal()"></div>
 
-    <!-- Logo -->
-    <div class="flex flex-col items-start group cursor-pointer">
-
-      <div class="flex items-center gap-2">
-        
-      <!-- Logo Image at Bottom -->
-      <img
-        src="/images/phonify_logo.jpg"
-        alt="Phonify Logo"
-        style="border-radius: 25px;"
-        class="h-10 mt-1 opacity-90 group-hover:opacity-100 transition"
-      />
-       
-
-        <h1
-          class="text-3xl font-display font-extrabold text-gray-900 tracking-tighter uppercase italic"
-        >
-          Phonify
-        </h1>
-      </div>
-
+        <div class="fixed inset-0 z-10 w-screen overflow-y-auto">
+            <div class="flex min-h-full items-center justify-center p-4 text-center sm:p-0">
+                <div class="relative transform overflow-hidden rounded-2xl bg-white text-left shadow-2xl transition-all sm:my-8 sm:w-full sm:max-w-md border-t-4 border-primary">
+                    <div class="bg-white px-4 pb-4 pt-5 sm:p-6 sm:pb-4">
+                        <div class="sm:flex sm:items-start">
+                            <div class="mx-auto flex h-12 w-12 flex-shrink-0 items-center justify-center rounded-full bg-blue-100 sm:mx-0 sm:h-10 sm:w-10">
+                                <i class="fa-solid fa-phone text-primary"></i>
+                            </div>
+                            <div class="mt-3 text-center sm:ml-4 sm:mt-0 sm:text-left w-full">
+                                <h3 class="text-xl font-display font-bold leading-6 text-gray-900" id="modal-title">Book via Phone</h3>
+                                <div class="mt-2">
+                                    <p class="text-sm text-gray-500">Call us to reserve this device immediately. </p>
+                                    
+                                    <div class="mt-4 flex items-center gap-2 bg-gray-50 p-3 rounded-xl border border-gray-200">
+                                        <span class="flex-grow font-mono font-bold text-lg text-gray-800 tracking-wider" id="phoneNumber">+91 9088803337</span>
+                                        <button onclick="copyNumber()" id="copyBtn" class="bg-white border border-gray-300 hover:border-primary text-gray-600 hover:text-primary px-3 py-1.5 rounded-lg text-xs font-bold uppercase transition shadow-sm">
+                                            <i class="fa-regular fa-copy"></i> Copy
+                                        </button>
+                                    </div>
+                                    <p id="copyFeedback" class="text-xs text-green-600 font-bold mt-1 h-4 opacity-0 transition-opacity text-right">Copied to clipboard!</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="bg-gray-50 px-4 py-3 sm:flex sm:flex-row-reverse sm:px-6">
+                      
+                        <button type="button" class="mt-3 inline-flex w-full justify-center rounded-lg bg-white px-3 py-2 text-sm font-semibold text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 hover:bg-gray-50 sm:mt-0 sm:w-auto" onclick="closeModal()">Cancel</button>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
 
-        <!-- Search Bar (Sporty Pill Shape) -->
+ <nav class="bg-white sticky top-0 z-50 border-b border-blue-100 shadow-sm">
+    <div class="container mx-auto px-4 py-3 flex justify-between items-center">
+        
+        <a href="index.html" class="flex items-center gap-2 group">
+            <img src="/images/phonify_logo.jpg" alt="Phonify" class="h-10 mt-1 opacity-90 rounded-full group-hover:opacity-100 transition" onerror="this.src='https://placehold.co/100x100/2563eb/white?text=P'">
+            <h1 class="text-3xl font-display font-extrabold text-gray-900 tracking-tighter uppercase italic group-hover:text-primary transition">Phonify</h1>
+        </a>
+
         <div class="hidden md:flex flex-1 mx-12 max-w-xl relative">
-          <input
-            type="text"
-            placeholder="Search for mobiles..."
-            class="w-full bg-gray-50 border-2 border-gray-200 rounded-full py-2.5 px-6 focus:outline-none focus:border-primary focus:bg-white transition-all font-medium text-gray-600"
-          />
-          <button
-            class="absolute right-1 top-1 bottom-1 px-6 bg-primary text-white rounded-full hover:bg-primaryDark transition shadow-md flex items-center justify-center transform active:scale-95"
-          >
-            <i class="fa-solid fa-search"></i>
-          </button>
+            <input type="text" placeholder="Search for mobiles..." class="w-full bg-gray-50 border-2 border-gray-200 rounded-full py-2.5 px-6 focus:outline-none focus:border-blue-600 font-medium text-gray-600 transition-colors" />
+            <button class="absolute right-1 top-1 bottom-1 px-6 bg-blue-600 text-white rounded-full hover:bg-blue-700 transition shadow-md flex items-center justify-center">
+                <i class="fa-solid fa-search"></i>
+            </button>
         </div>
 
-        <!-- Actions -->
         <div class="flex items-center gap-6">
-       
-          <a
-            href="#"
-            class="flex items-center gap-2 hover:text-primary relative group"
-          >
-            <div class="relative">
-             <i
-    class="fa-solid fa-heart text-2xl group-hover:scale-110 transition"
-></i>
-              <span
-                class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold rounded-full w-5 h-5 flex items-center justify-center border-2 border-white"
-                >0</span
-              >
-            </div>
-          </a>
-          <button class="md:hidden text-2xl text-gray-700">
-            <i class="fa-solid fa-bars"></i>
-          </button>
-        </div>
-      </div>
-      <!-- Mobile Search -->
-      <div class="md:hidden px-4 pb-3">
-        <div class="relative">
-          <input
-            type="text"
-            placeholder="Search..."
-            class="w-full bg-gray-50 border border-gray-300 rounded-lg py-2 px-3"
-          />
-          <button class="absolute right-2 top-2 text-gray-500">
-            <i class="fa-solid fa-search"></i>
-          </button>
-        </div>
-      </div>
-    </nav>
-  
-    </nav>
+            
+            <a href="wishlist.html" class="relative group" title="Wishlist">
+                <i class="fa-solid fa-heart text-2xl text-gray-600 group-hover:text-red-500 transition"></i>
+                <span id="navWishlistCount" class="absolute -top-2 -right-2 bg-red-500 text-white text-[10px] font-bold w-5 h-5 flex items-center justify-center rounded-full opacity-0 transition-opacity">0</span>
+            </a>
 
-    <!-- Breadcrumb -->
+           
+            
+        </div>
+    </div>
+</nav>
+
     <div class="container mx-auto px-4 py-4">
         <p class="text-sm text-gray-500 font-medium">
             <a href="index.html" class="hover:text-primary">Home</a> <i class="fa-solid fa-chevron-right text-xs mx-1"></i> 
             <a href="#" class="hover:text-primary">Mobiles</a> <i class="fa-solid fa-chevron-right text-xs mx-1"></i> 
-            <span class="text-gray-800 font-bold">Oppo K10 5G</span>
+            <span class="text-gray-800 font-bold">Apple iPhone 17 Pro Max</span>
         </p>
     </div>
 
-    <!-- PRODUCT DETAILS SECTION -->
     <section class="container mx-auto px-4 pb-12">
         <div class="bg-white rounded-3xl shadow-xl overflow-hidden border border-gray-100">
             <div class="grid grid-cols-1 md:grid-cols-12 gap-0">
                 
-                <!-- LEFT COLUMN: Image Gallery -->
                 <div class="md:col-span-5 p-6 md:p-8 bg-gray-50/50 flex flex-col relative border-r border-gray-100">
-                    <!-- Share Icon -->
-                    <button class="absolute top-6 right-6 w-10 h-10 bg-white rounded-full shadow-md flex items-center justify-center text-gray-500 hover:text-primary hover:scale-110 transition z-10">
-                        <i class="fa-solid fa-share-nodes"></i>
-                    </button>
-
-                    <!-- Main Image -->
                     <div class="relative w-full aspect-[4/5] flex items-center justify-center bg-white rounded-2xl shadow-inner mb-4 overflow-hidden group">
-                        <img id="mainImage" src="/images/Vivo V29.jpg
-" alt="Product" class="h-full object-contain p-6 transition duration-500 group-hover:scale-110">
+                        <img id="mainImage" src="" alt="Product" class="h-full object-contain p-6 transition duration-500 group-hover:scale-110">
                         
-                        <!-- Image Overlay Badges -->
                         <div class="absolute bottom-4 left-0 right-0 flex justify-center gap-2 px-4">
-                          
                             <span class="bg-green-500/90 text-white text-[10px] font-bold px-3 py-1 rounded-full backdrop-blur-sm border border-white/20">
-                                <i class="fa-solid fa-shield-halved mr-1"></i> 12 Month Warranty
+                                <i class="fa-solid fa-check-circle mr-1"></i> Apple Care Valid
                             </span>
                         </div>
                     </div>
 
-                    <!-- Thumbnails -->
-                    <div class="flex gap-3 justify-center overflow-x-auto pb-2">
-                        <div class="w-16 h-16 border-2 border-primary rounded-lg p-1 bg-white cursor-pointer thumb-active shadow-sm" onclick="changeImage(this, 'https://m.media-amazon.com/images/I/61ORR284iTL._SX679_.jpg')">
-                            <img src="/images/Realme-P1-Pro.webp" class="w-full h-full object-contain">
-                        </div>
-                        <div class="w-16 h-16 border-2 border-transparent hover:border-blue-300 rounded-lg p-1 bg-white cursor-pointer shadow-sm transition" onclick="changeImage(this, 'https://m.media-amazon.com/images/I/61Z-7N7eJLL._SX679_.jpg')">
-                            <img src="/images/Vivo Y75.png" class="w-full h-full object-contain">
-                        </div>
-                        <div class="w-16 h-16 border-2 border-transparent hover:border-blue-300 rounded-lg p-1 bg-white cursor-pointer shadow-sm transition" onclick="changeImage(this, 'https://m.media-amazon.com/images/I/71hEzQGO5qL._SX679_.jpg')">
-                            <img src="/images/Samsung Galaxy A25.png" class="w-full h-full object-contain">
-                        </div>
-                        <div class="w-16 h-16 border-2 border-transparent hover:border-blue-300 rounded-lg p-1 bg-white cursor-pointer shadow-sm transition" onclick="changeImage(this, 'https://m.media-amazon.com/images/I/7101V4uZ0RL._SX679_.jpg')">
-                            <img src="/images/Apple-iPhone-17.jpg" class="w-full h-full object-contain">
-                        </div>
-                    </div>
+                    <div id="thumbnailContainer" class="flex gap-3 justify-center overflow-x-auto pb-2"></div>
                 </div>
 
-                <!-- RIGHT COLUMN: Product Info -->
                 <div class="md:col-span-7 p-6 md:p-10 flex flex-col">
-                    <!-- Brand & Title -->
                     <div class="mb-4">
-                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1 block">OPPO</span>
+                        <span class="text-xs font-bold text-gray-400 uppercase tracking-widest mb-1 block">APPLE</span>
                         <h1 class="text-2xl md:text-3xl font-display font-black text-gray-900 uppercase italic leading-tight">
-                            OPPO K10 5G (8/128) GB, <br><span class="text-primary">MIDNIGHT BLACK IND</span>
+                            iPhone 17 Pro Max (256 GB), <br>
+                            <span id="colorTitle" class="text-primary"> Deep Blue</span>
                         </h1>
                     </div>
 
-                    <!-- Price Block -->
                     <div class="flex items-end gap-3 mb-6 pb-6 border-b border-gray-100">
-                        <span class="text-red-500 font-bold text-lg">-55%</span>
-                        <span class="text-4xl font-display font-black text-primary">₹ 9000</span>
-                        <span class="text-lg text-gray-400 line-through font-bold mb-1">₹26000</span>
+                        <span id="discountDisplay" class="text-red-500 font-bold text-lg">-20%</span>
+                        <span id="priceDisplay" class="text-4xl font-display font-black text-primary">₹ 1,25,000</span>
+                        <span id="oldPriceDisplay" class="text-lg text-gray-400 line-through font-bold mb-1">₹ 1,59,900</span>
                     </div>
 
-                    <!-- Details Grid -->
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-y-4 gap-x-8 text-sm mb-6">
                         <div class="flex items-center">
                             <span class="w-24 font-bold text-gray-500">Store Name :</span>
                             <span class="font-bold text-primary uppercase bg-blue-50 px-2 py-0.5 rounded">Barrackpore</span>
                         </div>
+                        
                         <div class="flex items-center">
                             <span class="w-24 font-bold text-gray-500">Quality :</span>
-                            <span class="font-bold text-gray-800">Mint <a href="#" class="text-red-500 text-xs ml-1 hover:underline">Learn more</a></span>
+                            <span id="qualityText" class="font-bold text-gray-800">Mint <a href="#" class="text-red-500 text-xs ml-1 hover:underline">Learn more</a></span>
                         </div>
+
                         <div class="flex items-center">
                             <span class="w-24 font-bold text-gray-500">Age :</span>
-                            <span class="border border-brandYellow text-brandYellow px-2 py-0.5 rounded text-xs font-bold uppercase">Out Of Warranty</span>
+                            <span class="border border-green-500 text-green-600 px-2 py-0.5 rounded text-xs font-bold uppercase">2 Months Old</span>
                         </div>
+
                         <div class="flex items-center">
                             <span class="w-24 font-bold text-gray-500">IMEI :</span>
-                            <span class="border border-gray-300 text-gray-600 px-2 py-0.5 rounded text-xs font-mono">*****24795</span>
+                            <span class="border border-gray-300 text-gray-600 px-2 py-0.5 rounded text-xs font-mono">*****88902</span>
                         </div>
                     </div>
 
-                    <!-- Selectors -->
                     <div class="space-y-5 mb-8">
-                        <!-- Item Condition -->
                         <div>
                             <span class="font-bold text-gray-900 block mb-2 text-sm uppercase">Item Condition</span>
                             <div class="flex flex-wrap gap-2">
-                                <button class="px-6 py-2 bg-primary text-white font-bold rounded-lg shadow-md shadow-blue-200 transform scale-105 transition border-2 border-primary">Mint</button>
-                                <button class="px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:border-primary hover:text-primary transition">Good</button>
-                                <button class="px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:border-primary hover:text-primary transition">Fair</button>
+                                <button onclick="setCondition('mint')" id="btn-mint" class="px-6 py-2 bg-primary text-white font-bold rounded-lg border-2 border-primary">Mint</button>
+                                <button onclick="setCondition('good')" id="btn-good" class="px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border-2 border-gray-200">Good</button>
+                                <button onclick="setCondition('fair')" id="btn-fair" class="px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border-2 border-gray-200">Fair</button>
                             </div>
                         </div>
 
-                        <!-- Color Available -->
                         <div>
                             <span class="font-bold text-gray-900 block mb-2 text-sm uppercase">Color Available</span>
                             <div class="flex gap-3">
-                                <div class="w-10 h-10 rounded-full bg-black border-4 border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition ring-2 ring-offset-2 ring-primary"></div>
-                                <div class="w-10 h-10 rounded-full bg-blue-500 border-4 border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition opacity-40" title="Out of Stock"></div>
+                                <div onclick="setColor('Blue')" id="color-Blue" class="w-10 h-10 rounded-full bg-blue-600 border-4 border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition ring-2 ring-offset-2 ring-primary"></div>
+                                <div onclick="setColor('Orange')" id="color-Orange" class="w-10 h-10 rounded-full bg-orange-500 border-4 border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition ring-2 ring-offset-2 ring-transparent"></div>
                             </div>
                         </div>
-
-                        <!-- Storage -->
-                        <div>
+                        
+                         <div>
                             <span class="font-bold text-gray-900 block mb-2 text-sm uppercase">Storage</span>
-                            <button class="px-4 py-2 bg-primary text-white font-bold text-xs rounded shadow-md uppercase tracking-wider">(8/128) GB</button>
+                            <button class="px-4 py-2 bg-primary text-white font-bold text-xs rounded shadow-md uppercase tracking-wider">256 GB</button>
                         </div>
                     </div>
 
-                 
-
-                    <!-- Action Buttons -->
                     <div class="mt-auto pt-4 flex gap-4">
-                        <button class="flex-1 bg-primary hover:bg-primaryDark text-white font-display font-black text-lg py-3 rounded-xl shadow-lg shadow-blue-200 transform transition hover:-translate-y-1 uppercase tracking-widest flex items-center justify-center gap-2">
+                        <button onclick="openModal()" class="flex-1 bg-primary hover:bg-primaryDark text-white font-display font-black text-lg py-3 rounded-xl shadow-lg shadow-blue-200 transform transition hover:-translate-y-1 uppercase tracking-widest flex items-center justify-center gap-2">
                             <i class="fa-solid fa-bolt"></i> Book Now
                         </button>
-                        <button class="flex-1 bg-white hover:bg-gray-50 text-gray-800 border-2 border-gray-200 font-display font-bold text-lg py-3 rounded-xl transform transition hover:-translate-y-1 uppercase tracking-widest flex items-center justify-center gap-2">
-                            <i class="fa-solid fa-heart"></i> Add to Wishlist
+                        
+                        <button id="productWishlistBtn" onclick="toggleWishlist()" class="flex-1 bg-white hover:bg-gray-50 text-gray-800 border-2 border-gray-200 font-display font-bold text-lg py-3 rounded-xl transform transition hover:-translate-y-1 uppercase tracking-widest flex items-center justify-center gap-2 group">
+                            <i id="wishlistIcon" class="fa-regular fa-heart text-gray-400 group-hover:text-red-500 transition"></i> 
+                            <span id="wishlistText">Wishlist</span>
                         </button>
                     </div>
                 </div>
             </div>
             
-            <!-- Description Tab (Collapsible style) -->
             <div class="border-t border-gray-200 bg-gray-50 p-6">
-                <div class="flex justify-between items-center cursor-pointer">
+                <div class="flex justify-between items-center cursor-pointer" onclick="document.getElementById('desc-content').classList.toggle('hidden');">
                     <h3 class="font-display font-bold text-xl text-gray-800">Product Description</h3>
                     <i class="fa-solid fa-chevron-down text-gray-500"></i>
                 </div>
-                <div class="mt-4 text-gray-600 text-sm leading-relaxed">
-                    <p>The OPPO K10 5G features a sleek design and powerful performance with its Dimensity 810 processor. Capture stunning photos with the 48MP main camera and enjoy long-lasting battery life with 5000mAh capacity plus 33W SUPERVOOC charging. This unit is in Mint condition, passing our rigorous quality checks.</p>
+                <div id="desc-content" class="mt-4 text-gray-600 text-sm leading-relaxed">
+                    <p>Experience the future with the <span class="font-bold text-gray-900">iPhone 17 Pro Max</span>. Powered by the all-new A19 Pro Bionic chip, it features a stunning Aerospace-grade Titanium design and the most advanced Pro camera system ever. This unit includes a 120Hz ProMotion display and all-day battery life. <span id="desc-condition-text">This unit is in Mint condition.</span></p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- RELATED PRODUCTS SECTION -->
-    <section class="container mx-auto px-4 pb-16">
+     <section class="container mx-auto px-4 pb-16">
         <div class="flex justify-between items-end mb-8 border-b-2 border-gray-200 pb-2">
-            <h2 class="text-3xl font-display font-black italic text-gray-800 uppercase tracking-tight">Related <span class="text-primary">Products</span></h2>
+            <h2 class="text-3xl font-display font-black italic text-gray-800 uppercase tracking-tight">Related <span class="text-primary">Flagships</span></h2>
         </div>
 
         <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <!-- Reuse Card Design -->
             <div class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full">
-                <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1 px-3">65% OFF</span>
+                <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1 px-3">SAVE ₹20K</span>
                 <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
-                     <img src="https://m.media-amazon.com/images/I/71hEzQGO5qL._SX679_.jpg" class="h-full object-contain group-hover:scale-105 transition duration-500 drop-shadow-md">
+                     <img src="https://m.media-amazon.com/images/I/31A-AWx8PLL._SX342_SY445_QL70_FMwebp_.jpg" class="h-full object-contain group-hover:scale-105 transition duration-500">
                 </div>
                 <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
                     <div class="mb-2">
-                        <span class="bg-primary text-white text-[9px] px-1 rounded uppercase">Serampore</span>
-                        <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase mt-1">OPPO K10 5G (8/128)</h3>
-                        <p class="text-xs text-gray-500 font-medium">Midnight Black</p>
+                        <span class="bg-primary text-white text-[9px] px-1 rounded uppercase">Barrackpore</span>
+                        <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase mt-1">iPhone 16</h3>
+                        <p class="text-xs text-gray-500 font-medium">Ultramarine</p>
                     </div>
                     <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
-                        <span class="text-2xl font-display font-black text-primary">₹9000</span>
-                        <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹26000</span>
+                        <span class="text-2xl font-display font-black text-primary">₹65,000</span>
+                        <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹89,900</span>
                     </div>
-                     <button class="mt-3 w-full bg-primary text-white font-bold py-2 rounded text-sm uppercase hover:bg-primaryDark transition"><i class="fa-solid fa-bolt"></i> Buy Now</button>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full">
+                <span class="absolute top-0 right-0 bggreen-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1 px-3">>SAVE ₹40K</span>
+                <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
+                     <img src="https://m.media-amazon.com/images/I/41X9qNxoJKL._SY300_SX300_QL70_FMwebp_.jpg" class="h-full object-contain group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
+                    <div class="mb-2">
+                        <span class="bg-primary text-white text-[9px] px-1 rounded uppercase">Barrackpore</span>
+                        <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase mt-1">Samsung S24 Ultra</h3>
+                        <p class="text-xs text-gray-500 font-medium">Titanium Gray</p>
+                    </div>
+                    <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
+                        <span class="text-2xl font-display font-black text-primary">₹92,000</span>
+                        <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹1,39,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full">
+                <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1 px-3">30% OFF</span>
+                <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
+                     <img src="https://m.media-amazon.com/images/I/410a3ScPotL._SY300_SX300_QL70_FMwebp_.jpg" class="h-full object-contain group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
+                    <div class="mb-2">
+                        <span class="bg-primary text-white text-[9px] px-1 rounded uppercase">Barrackpore</span>
+                        <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase mt-1">Google Pixel 9 Pro</h3>
+                        <p class="text-xs text-gray-500 font-medium">Porcelain</p>
+                    </div>
+                    <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
+                        <span class="text-2xl font-display font-black text-primary">₹85,500</span>
+                        <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹1,20,000</span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full">
+                <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1 px-3">40% OFF</span>
+                <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
+                     <img src="https://m.media-amazon.com/images/I/31Q14qzdoZL._SY300_SX300_QL70_FMwebp_.jpg" class="h-full object-contain group-hover:scale-105 transition duration-500">
+                </div>
+                <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
+                    <div class="mb-2">
+                        <span class="bg-primary text-white text-[9px] px-1 rounded uppercase">Barrackpore</span>
+                        <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase mt-1">iPhone 15</h3>
+                        <p class="text-xs text-gray-500 font-medium">Blue</p>
+                    </div>
+                    <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
+                        <span class="text-2xl font-display font-black text-primary">₹48,000</span>
+                        <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹79,900</span>
+                    </div>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- Footer (Reused) -->
- <footer class="bg-darkBg text-gray-300 pt-16 border-t border-gray-800">
+   <footer class="bg-darkBg text-gray-300 pt-16 border-t border-gray-800">
       <div class="container mx-auto px-4 pb-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <!-- Brand & Description -->
           <div>
             <div class="flex items-center gap-2 mb-6">
-        
-      <!-- Logo Image at Bottom -->
-      <img
-        src="/images/phonify_logo.jpg"
-        alt="Phonify Logo"
-        style="border-radius: 25px;"
-        class="h-10 mt-1 opacity-90 group-hover:opacity-100 transition"
-      />
-      
-              <h2
-                class="text-2xl font-display font-black text-white uppercase italic"
-              >
-                Phonify
-              </h2>
+               <img
+                src="/images/phonify_logo.jpg"
+                alt="Phonify"
+                style="border-radius: 25px;"
+                class="h-10 mt-1 opacity-90 transition"
+                onerror="this.src='https://placehold.co/100x100/2563eb/white?text=P'"
+              />
+              <h2 class="text-2xl font-display font-black text-white uppercase italic">Phonify</h2>
             </div>
-           <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-    West Bengal's premier destination for certified pre-owned smartphones. 
-    <span class="text-gray-300 font-semibold">Expertly refurbished • Warranty guaranteed • Loved by thousands</span>
-</p>
-
-            <div
-              class="flex items-center gap-4 mt-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700"
-            >
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+              West Bengal's premier destination for certified pre-owned
+              smartphones.
+              <span class="text-gray-300 font-semibold">Expertly refurbished • Warranty guaranteed</span>
+            </p>
+            <div class="flex items-center gap-4 mt-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700">
               <i class="fa-solid fa-headset text-3xl text-primary"></i>
               <div>
-                <p
-                  class="font-bold text-white text-xs uppercase tracking-wider"
-                >
-                  Support 24/7
-                </p>
-                <p class="text-xl font-display font-bold text-white">
-                  
-                </p>
+                <p class="font-bold text-white text-xs uppercase tracking-wider">Support 24/7</p>
               </div>
             </div>
           </div>
 
-          <!-- Quick Links -->
           <div>
-            <h3
-              class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3"
-            >
-              Quick Links
-            </h3>
+            <h3 class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3">Quick Links</h3>
             <ul class="space-y-3 text-sm">
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >About Us</a
-                >
-              </li>
-              
-           
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Warranty Policy</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Complaint Care</a
-                >
-              </li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">About Us</a></li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Warranty Policy</a></li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Complaint Care</a></li>
+            </ul>
+          </div>
+          
+           <div>
+            <h3 class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3">Policies</h3>
+            <ul class="space-y-3 text-sm">
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Contact Us</a></li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Terms & Conditions</a></li>
             </ul>
           </div>
 
-          <!-- Policies -->
           <div>
-            <h3
-              class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3"
-            >
-              Policies
-            </h3>
-            <ul class="space-y-3 text-sm">
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Contact Us</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Terms & Conditions</a
-                >
-              </li>
-         
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Condition Guidelines</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- Location -->
-          <div>
-            <h3
-              class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3"
-            >
-              Visit Store
-            </h3>
+            <h3 class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3">Visit Store</h3>
             <div class="flex gap-3 mb-6">
-              <div class="mt-1 text-primary">
-                <i class="fa-solid fa-location-dot"></i>
-              </div>
-              <p class="text-sm text-gray-400 leading-relaxed">
-              
-                Barrackpore, Kolkata 700122
-              </p>
+              <div class="mt-1 text-primary"><i class="fa-solid fa-location-dot"></i></div>
+              <p class="text-sm text-gray-400 leading-relaxed">Barrackpore, Kolkata 700122</p>
             </div>
-
             <div class="flex gap-4">
-              <a
-                href="#"
-                class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition"
-                ><i class="fa-brands fa-facebook-f"></i
-              ></a>
-              <a
-                href="#"
-                class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition"
-                ><i class="fa-brands fa-instagram"></i
-              ></a>
-              <a
-                href="#"
-                class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition"
-                ><i class="fa-brands fa-youtube"></i
-              ></a>
+              <a href="#" class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#" class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Copyright Bar -->
       <div class="bg-black py-4 border-t border-gray-800">
-        <div
-          class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4"
-        >
-          <p class="text-xs text-gray-500">
-            <span class="text-primary font-bold">Phonify</span> © 2025 All Right
-            Reserved.
-          </p>
-          <div class="flex items-center gap-3">
-            <span
-              class="text-xs text-gray-500 uppercase font-bold tracking-widest"
-              >Secured by</span
-            >
-            <div
-              class="flex gap-2 opacity-80 grayscale hover:grayscale-0 transition"
-            >
-              <i class="fa-brands fa-cc-visa text-white text-xl"></i>
-              <i class="fa-brands fa-cc-mastercard text-white text-xl"></i>
-              <i class="fa-brands fa-google-pay text-white text-xl"></i>
-            </div>
-          </div>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-xs text-gray-500"><span class="text-primary font-bold">Phonify</span> © 2025 All Right Reserved.</p>
         </div>
       </div>
     </footer>
 
     <script>
-        // Simple Gallery Script
-        function changeImage(element, src) {
-            // Update main image
-            const mainImg = document.getElementById('mainImage');
-            mainImg.style.opacity = '0';
-            setTimeout(() => {
-                mainImg.src = src;
-                mainImg.style.opacity = '1';
-            }, 200);
+        // --- 1. DATA FOR iPhone 17 Pro Max ---
+        const productData = {
+            "Blue": {
+                name: " Deep Blue",
+                baseImage: "https://m.media-amazon.com/images/I/31Bn8sQI3xL._SX342_SY445_QL70_FMwebp_.jpg", 
+                thumbnails: [
+                    "https://m.media-amazon.com/images/I/71rwU33iPuL._SX679_.jpg", 
+                    "https://m.media-amazon.com/images/I/91crodPatIL._SL1500_.jpg", 
+                    "https://m.media-amazon.com/images/I/71bSZqGy3-L._SL1500_.jpg" 
+                ],
+                prices: {
+                    "mint": { price: "1,25,000", old: "1,59,900", off: "-20%" },
+                    "good": { price: "1,15,000", old: "1,59,900", off: "-28%" },
+                    "fair": { price: "1,05,000", old: "1,59,900", off: "-35%" }
+                }
+            },
+            "Orange": {
+                name: "Cosmic Orange",
+                baseImage: "https://m.media-amazon.com/images/I/71JGCn1z1TL._SX679_.jpg", 
+                thumbnails: [
+                    "https://m.media-amazon.com/images/I/71zwfwSC3EL._SX679_.jpg", 
+                    "https://m.media-amazon.com/images/I/917GUQT35bL._SX679_.jpg", 
+                    "https://m.media-amazon.com/images/I/71g5oEE256L._SX679_.jpg" 
+                ],
+                prices: {
+                    "mint": { price: "1,26,000", old: "1,59,900", off: "-20%" },
+                    "good": { price: "1,16,000", old: "1,59,900", off: "-28%" },
+                    "fair": { price: "1,06,000", old: "1,59,900", off: "-35%" }
+                }
+            }
+        };
 
-            // Update active state
-            document.querySelectorAll('.thumb-active').forEach(el => {
+        // --- 2. STATE ---
+        let currentState = {
+            color: 'Blue',
+            condition: 'mint'
+        };
+
+        // --- 3. WISHLIST LOGIC ---
+        let wishlistCount = 0;
+        let isWishlisted = false;
+
+        function toggleWishlist() {
+            isWishlisted = !isWishlisted; // Toggle state
+            
+            // Update Count
+            wishlistCount = isWishlisted ? wishlistCount + 1 : wishlistCount - 1;
+            if(wishlistCount < 0) wishlistCount = 0;
+
+            // Update Navbar Badge
+            const badge = document.getElementById('navWishlistCount');
+            badge.innerText = wishlistCount;
+            badge.style.opacity = wishlistCount > 0 ? '1' : '0';
+
+            // Update Product Button Style
+            const btn = document.getElementById('productWishlistBtn');
+            const icon = document.getElementById('wishlistIcon');
+            const text = document.getElementById('wishlistText');
+
+            if (isWishlisted) {
+                // Active State
+                btn.classList.add('border-red-500', 'bg-red-50');
+                btn.classList.remove('border-gray-200');
+                icon.classList.remove('fa-regular', 'text-gray-400');
+                icon.classList.add('fa-solid', 'text-red-500');
+                text.innerText = "Wishlisted";
+                text.classList.add('text-red-500');
+            } else {
+                // Inactive State
+                btn.classList.remove('border-red-500', 'bg-red-50');
+                btn.classList.add('border-gray-200');
+                icon.classList.remove('fa-solid', 'text-red-500');
+                icon.classList.add('fa-regular', 'text-gray-400');
+                text.innerText = "Wishlist";
+                text.classList.remove('text-red-500');
+            }
+        }
+
+        // --- 4. MODAL LOGIC ---
+        function openModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('bookingModal');
+            modal.classList.add('hidden');
+            // Reset Copy feedback
+            document.getElementById('copyFeedback').style.opacity = '0';
+            document.getElementById('copyBtn').innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+        }
+
+        function copyNumber() {
+            const num = document.getElementById('phoneNumber').innerText;
+            navigator.clipboard.writeText(num).then(() => {
+                // Visual Feedback
+                const feedback = document.getElementById('copyFeedback');
+                const btn = document.getElementById('copyBtn');
+                
+                feedback.style.opacity = '1';
+                btn.innerHTML = '<i class="fa-solid fa-check"></i>';
+                btn.classList.add('text-green-600', 'border-green-600');
+                
+                setTimeout(() => {
+                    feedback.style.opacity = '0';
+                    btn.innerHTML = '<i class="fa-regular fa-copy"></i> Copy';
+                    btn.classList.remove('text-green-600', 'border-green-600');
+                }, 2000);
+            });
+        }
+
+        // --- 5. EXISTING FUNCTIONS (Color/Condition) ---
+        function setColor(color) {
+            currentState.color = color;
+            updateUI(true); 
+        }
+
+        function setCondition(condition) {
+            currentState.condition = condition;
+            updateUI(false); 
+        }
+
+        function updateUI(updateImages) {
+            if (!productData[currentState.color]) return;
+
+            const data = productData[currentState.color];
+            const pricing = data.prices[currentState.condition];
+
+            document.getElementById('colorTitle').innerText = data.name;
+            const priceEl = document.getElementById('priceDisplay');
+            priceEl.innerText = "₹ " + pricing.price;
+            document.getElementById('oldPriceDisplay').innerText = "₹ " + pricing.old;
+            document.getElementById('discountDisplay').innerText = pricing.off;
+            
+            priceEl.classList.remove('price-update-anim');
+            void priceEl.offsetWidth; 
+            priceEl.classList.add('price-update-anim');
+
+            ['mint', 'good', 'fair'].forEach(c => {
+                const btn = document.getElementById(`btn-${c}`);
+                if (c === currentState.condition) {
+                    btn.className = "px-6 py-2 bg-primary text-white font-bold rounded-lg shadow-md transform scale-105 transition border-2 border-primary";
+                } else {
+                    btn.className = "px-6 py-2 bg-white text-gray-600 font-bold rounded-lg border-2 border-gray-200 hover:border-primary hover:text-primary transition";
+                }
+            });
+            
+            document.getElementById('qualityText').innerHTML = currentState.condition.charAt(0).toUpperCase() + currentState.condition.slice(1) + ' <a href="#" class="text-red-500 text-xs ml-1 hover:underline">Learn more</a>';
+            document.getElementById('desc-condition-text').innerText = `This unit is in ${currentState.condition} condition.`;
+
+            const blueBtn = document.getElementById('color-Blue');
+            const orangeBtn = document.getElementById('color-Orange');
+            const baseClass = "w-10 h-10 rounded-full border-4 border-gray-200 shadow-sm cursor-pointer hover:scale-110 transition ring-2 ring-offset-2";
+            
+            blueBtn.className = `${baseClass} bg-blue-600 ${currentState.color === 'Blue' ? 'ring-primary' : 'ring-transparent'}`;
+            orangeBtn.className = `${baseClass} bg-orange-500 ${currentState.color === 'Orange' ? 'ring-primary' : 'ring-transparent'}`;
+
+            if (updateImages) {
+                const mainImg = document.getElementById('mainImage');
+                mainImg.style.opacity = '0';
+                setTimeout(() => {
+                    mainImg.src = data.baseImage;
+                    mainImg.style.opacity = '1';
+                }, 200);
+
+                const thumbContainer = document.getElementById('thumbnailContainer');
+                thumbContainer.innerHTML = ''; 
+                
+                data.thumbnails.forEach((src, index) => {
+                    const isActive = index === 0 ? 'thumb-active border-primary' : 'border-transparent';
+                    const thumbDiv = document.createElement('div');
+                    thumbDiv.className = `w-16 h-16 border-2 ${isActive} hover:border-blue-300 rounded-lg p-1 bg-white cursor-pointer shadow-sm transition flex-shrink-0`;
+                    thumbDiv.onclick = function() { changeMainImage(this, src); };
+                    
+                    const img = document.createElement('img');
+                    img.src = src;
+                    img.className = "w-full h-full object-contain";
+                    thumbDiv.appendChild(img);
+                    thumbContainer.appendChild(thumbDiv);
+                });
+            }
+        }
+
+        function changeMainImage(element, src) {
+            document.getElementById('mainImage').src = src;
+            document.getElementById('thumbnailContainer').querySelectorAll('div').forEach(el => {
                 el.classList.remove('thumb-active', 'border-primary');
                 el.classList.add('border-transparent');
             });
             element.classList.remove('border-transparent');
             element.classList.add('thumb-active', 'border-primary');
         }
+
+        window.onload = function() { updateUI(true); };
     </script>
 </body>
 </html>

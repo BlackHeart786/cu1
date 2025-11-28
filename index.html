@@ -5,22 +5,18 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Phonify - Premium Pre-Owned Mobiles</title>
 
-    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Font Awesome for Icons -->
     <link
       rel="stylesheet"
       href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"
     />
 
-    <!-- Google Fonts: Exo 2 (Sporty/Tech Headers) and Rajdhani (Squared Body) -->
     <link
       href="https://fonts.googleapis.com/css2?family=Exo+2:ital,wght@0,300;0,400;0,600;0,700;0,800;1,700&family=Rajdhani:wght@400;500;600;700&display=swap"
       rel="stylesheet"
     />
 
-    <!-- Custom Config to match the Blue Tech Theme -->
     <script>
       tailwind.config = {
         theme: {
@@ -30,12 +26,10 @@
               display: ["Exo 2", "sans-serif"],
             },
             colors: {
-              primary: "#2563eb", // Blue-600
-              primaryDark: "#1d4ed8", // Blue-700
-              secondary: "#06b6d4", // Cyan-500
-              darkBg: "#0f172a", // Slate-900 for footer
-              brandGradientStart: "#3b82f6", // Blue-500
-              brandGradientEnd: "#1e3a8a", // Blue-900
+              primary: "#2563eb",
+              primaryDark: "#1d4ed8",
+              secondary: "#06b6d4",
+              darkBg: "#0f172a",
             },
             skew: {
               "-12": "-12deg",
@@ -46,7 +40,6 @@
     </script>
 
     <style>
-      /* Sporty Gradient Banner */
       .gradient-banner {
         background: linear-gradient(
           135deg,
@@ -58,37 +51,39 @@
       .text-shadow {
         text-shadow: 2px 2px 0px rgba(0, 0, 0, 0.2);
       }
-      /* Slanted "Sporty" Badges */
       .badge-sport {
         clip-path: polygon(10% 0, 100% 0, 90% 100%, 0% 100%);
         padding-left: 1rem;
         padding-right: 1rem;
       }
-      .price-strike {
-        text-decoration: line-through;
-        color: #94a3b8;
+      /* Hide Scrollbar */
+      .no-scrollbar::-webkit-scrollbar {
+        display: none;
       }
-      /* Custom Scrollbar for a cleaner look */
-      ::-webkit-scrollbar {
-        width: 8px;
+      .no-scrollbar {
+        -ms-overflow-style: none;
+        scrollbar-width: none;
       }
-      ::-webkit-scrollbar-track {
-        background: #f1f1f1;
+      
+      /* Active Brand Filter Style */
+      .brand-active {
+        border-color: #2563eb !important;
+        box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1), 0 4px 6px -2px rgba(0, 0, 0, 0.05) !important;
+        background-color: #eff6ff !important; /* blue-50 */
       }
-      ::-webkit-scrollbar-thumb {
-        background: #cbd5e1;
-        border-radius: 4px;
-      }
-      ::-webkit-scrollbar-thumb:hover {
-        background: #94a3b8;
+      
+      /* Search results highlight */
+      .highlight {
+        background-color: #fef3c7; /* yellow-100 */
+        padding: 0 2px;
+        border-radius: 2px;
       }
     </style>
   </head>
   <body
     class="bg-gray-100 text-gray-800 font-sans selection:bg-primary selection:text-white"
   >
-    <!-- Top Navigation -->
-<nav class="bg-white sticky top-0 z-50 border-blue-100">
+   <nav class="bg-white sticky top-0 z-50 border-blue-100">
   <div class="container mx-auto px-4 py-3 flex justify-between items-center">
 
     <!-- Logo -->
@@ -118,10 +113,12 @@
         <div class="hidden md:flex flex-1 mx-12 max-w-xl relative">
           <input
             type="text"
+            id="searchInput"
             placeholder="Search for mobiles..."
             class="w-full bg-gray-50 border-2 border-gray-200 rounded-full py-2.5 px-6 focus:outline-none focus:border-primary focus:bg-white transition-all font-medium text-gray-600"
           />
           <button
+            onclick="searchProducts()"
             class="absolute right-1 top-1 bottom-1 px-6 bg-primary text-white rounded-full hover:bg-primaryDark transition shadow-md flex items-center justify-center transform active:scale-95"
           >
             <i class="fa-solid fa-search"></i>
@@ -155,10 +152,11 @@
         <div class="relative">
           <input
             type="text"
+            id="mobileSearchInput"
             placeholder="Search..."
             class="w-full bg-gray-50 border border-gray-300 rounded-lg py-2 px-3"
           />
-          <button class="absolute right-2 top-2 text-gray-500">
+          <button onclick="searchProducts()" class="absolute right-2 top-2 text-gray-500">
             <i class="fa-solid fa-search"></i>
           </button>
         </div>
@@ -192,273 +190,120 @@
             <a href="#" class="text-red-600 flex items-center gap-1"><i class="fa-solid fa-fire"></i> Hot Deals</a>
         </div>
     </div>
-    <!-- Hero Banner Section -->
-    <section class="container mx-auto px-4 mt-6">
-      <div
-        class="gradient-banner rounded-3xl p-6 md:p-12 flex flex-col md:flex-row items-center justify-between relative overflow-hidden shadow-2xl ring-4 ring-blue-50"
-      >
-        <!-- Tech Pattern Overlay -->
-        <div
-          class="absolute inset-0 opacity-20 pointer-events-none"
-          style="
-            background-image: radial-gradient(
-              circle,
-              #ffffff 1px,
-              transparent 1px
-            );
-            background-size: 20px 20px;
-          "
-        ></div>
 
-        <!-- Text Content -->
-        <div
-          class="z-10 text-white md:w-2/3 text-center md:text-left mb-8 md:mb-0"
-        >
-          <div
-            class="inline-block bg-yellow-400 text-black text-xs font-black uppercase tracking-wider px-3 py-1 transform -skew-x-12 mb-3 shadow-sm"
-          >
+    <section class="container mx-auto px-4 mt-6">
+      <div class="gradient-banner rounded-3xl p-6 md:p-12 flex flex-col md:flex-row items-center justify-between relative overflow-hidden shadow-2xl ring-4 ring-blue-50">
+        <div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: radial-gradient(circle, #ffffff 1px, transparent 1px); background-size: 20px 20px;"></div>
+
+        <div class="z-10 text-white md:w-2/3 text-center md:text-left mb-8 md:mb-0">
+          <div class="inline-block bg-yellow-400 text-black text-xs font-black uppercase tracking-wider px-3 py-1 transform -skew-x-12 mb-3 shadow-sm">
             Limited Time Offer
           </div>
-          <h2
-            class="font-display text-4xl md:text-6xl font-black mb-2 text-shadow uppercase italic leading-none tracking-tight"
-          >
+          <h2 class="font-display text-4xl md:text-6xl font-black mb-2 text-shadow uppercase italic leading-none tracking-tight">
             Book Your <br />
             Dream Phone
           </h2>
-          <h3
-            class="text-xl md:text-3xl font-bold mb-8 bg-white text-primary inline-block px-4 py-1 transform -skew-x-12 shadow-lg"
-          >
+          <h3 class="text-xl md:text-3xl font-bold mb-8 bg-white text-primary inline-block px-4 py-1 transform -skew-x-12 shadow-lg">
             FROM OUR WEBSITE
           </h3>
-
-          <div
-            class="flex flex-wrap justify-center md:justify-start gap-3 text-sm font-bold uppercase tracking-wide mb-8"
-          >
-            <span
-              class="bg-black/30 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20"
-              >COD Available</span
-            >
-            <span
-              class="bg-black/30 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20"
-              >Prepaid Delivery</span
-            >
-            <span
-              class="bg-black/30 px-4 py-1.5 rounded-full backdrop-blur-md border border-white/20"
-              >Store Pickup</span
-            >
-          </div>
-
-          <button
-            class="bg-white text-primary hover:bg-gray-100 font-display font-black text-lg py-3 px-10 rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.2)] transform transition hover:-translate-y-1 hover:scale-105 border-b-4 border-gray-300 active:border-b-0 active:translate-y-0"
-          >
-            BUY NOW <i class="fa-solid fa-bolt ml-2 text-yellow-500"></i>
+          <button class="bg-white text-primary hover:bg-gray-100 font-display font-black text-lg py-3 px-10 rounded-full shadow-[0_10px_20px_rgba(0,0,0,0.2)] transform transition hover:-translate-y-1 hover:scale-105 border-b-4 border-gray-300 active:border-b-0 active:translate-y-0">
+            BOOK NOW <i class="fa-solid fa-bolt ml-2 text-yellow-500"></i>
           </button>
         </div>
 
-        <!-- Hero Image -->
         <div class="z-10 md:w-1/3 flex justify-center relative">
-          <div
-            class="w-56 h-56 md:w-72 md:h-72 bg-white/10 backdrop-blur-md rounded-full border-4 border-white/50 shadow-2xl flex items-center justify-center relative overflow-hidden ring-4 ring-white/20"
-          >
-            <img
-              src="https://img.freepik.com/free-vector/cute-man-holding-phone-showing-thumb-up-cartoon-vector-icon-illustration-people-technology-icon_138676-5418.jpg?w=740"
-              alt="Mascot"
-              class="object-cover w-full h-full opacity-95"
-            />
+          <div class="w-56 h-56 md:w-72 md:h-72 bg-white/10 backdrop-blur-md rounded-full border-4 border-white/50 shadow-2xl flex items-center justify-center relative overflow-hidden ring-4 ring-white/20">
+            <img src="https://img.freepik.com/free-vector/cute-man-holding-phone-showing-thumb-up-cartoon-vector-icon-illustration-people-technology-icon_138676-5418.jpg?w=740" alt="Mascot" class="object-cover w-full h-full opacity-95" />
           </div>
-          <!-- Floating Elements -->
-          <div
-            class="absolute -top-4 -right-4 bg-yellow-400 text-black font-bold p-3 rounded-full shadow-lg animate-bounce text-xs"
-          >
+          <div class="absolute -top-4 -right-4 bg-yellow-400 text-black font-bold p-3 rounded-full shadow-lg animate-bounce text-xs">
             Best Price!
           </div>
         </div>
       </div>
     </section>
 
-    <!-- Service Icons Bar (Sporty/Tech Style) -->
-
-
-    <!-- NEW SECTION: Shop By Brand -->
-    <section class="container mx-auto px-4 py-4">
-      <h2
-        class="text-2xl font-display font-black italic text-gray-800 uppercase tracking-tight mb-6 flex items-center gap-2"
-      >
+    <section class="container mx-auto px-4 py-4 mt-4">
+      <h2 class="text-2xl font-display font-black italic text-gray-800 uppercase tracking-tight mb-6 flex items-center gap-2">
         Shop By <span class="text-primary">Brand</span>
         <span class="h-1 flex-1 bg-gray-200 rounded-full ml-4"></span>
       </h2>
 
       <div class="grid grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-3">
-        <!-- Brand Items -->
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <i
-            class="fa-brands fa-apple text-3xl text-gray-800 group-hover:text-primary transition mb-1"
-          ></i>
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >Apple</span
-          >
-        </a>
+        <div onclick="filterProducts('apple')" id="btn-apple" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <i class="fa-brands fa-apple text-3xl text-gray-800 group-hover:text-primary transition mb-1"></i>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">Apple</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >SAMSUNG</span
-          >
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >Samsung</span
-          >
-        </a>
+        <div onclick="filterProducts('samsung')" id="btn-samsung" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">SAMSUNG</span>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">Samsung</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >1+</span
-          >
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >OnePlus</span
-          >
-        </a>
+        <div onclick="filterProducts('oneplus')" id="btn-oneplus" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">1+</span>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">OnePlus</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >mi</span
-          >
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >Xiaomi</span
-          >
-        </a>
+        <div onclick="filterProducts('xiaomi')" id="btn-xiaomi" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">mi</span>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">Xiaomi</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >vivo</span
-          >
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >Vivo</span
-          >
-        </a>
+        <div onclick="filterProducts('vivo')" id="btn-vivo" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">vivo</span>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">Vivo</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >oppo</span
-          >
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >Oppo</span
-          >
-        </a>
+        <div onclick="filterProducts('oppo')" id="btn-oppo" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">oppo</span>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">Oppo</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >realme</span
-          >
-          <span
-            class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary"
-            >Realme</span
-          >
-        </a>
+        <div onclick="filterProducts('realme')" id="btn-realme" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">realme</span>
+          <span class="font-bold text-xs uppercase tracking-wide text-gray-600 group-hover:text-primary">Realme</span>
+        </div>
 
-        <a
-          href="#"
-          class="group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300"
-        >
-          <span
-            class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1"
-            >View All</span
-          >
-          <i
-            class="fa-solid fa-arrow-right text-gray-600 group-hover:text-primary"
-          ></i>
-        </a>
+        <div onclick="filterProducts('all')" id="btn-all" class="brand-btn group bg-white border border-gray-200 rounded-xl py-4 flex flex-col items-center justify-center hover:border-primary hover:shadow-lg hover:-translate-y-1 transition duration-300 cursor-pointer">
+          <span class="text-xl font-display font-black text-gray-800 group-hover:text-primary transition mb-1">ALL</span>
+          <i class="fa-solid fa-rotate-right text-gray-600 group-hover:text-primary"></i>
+        </div>
       </div>
     </section>
 
-    <!-- Hot Deal Section -->
     <section class="container mx-auto px-4 py-4">
-      <div
-        class="flex justify-between items-end mb-8 border-b-2 border-gray-200 pb-2"
-      >
-        <h2
-          class="text-3xl font-display font-black italic text-gray-800 uppercase tracking-tight"
-        >
+      <div class="flex justify-between items-end mb-8 border-b-2 border-gray-200 pb-2">
+        <h2 class="text-3xl font-display font-black italic text-gray-800 uppercase tracking-tight">
           Hot <span class="text-primary">Deals</span>
         </h2>
-        <a
-          href="#"
-          class="text-primary font-bold hover:bg-blue-50 px-4 py-1 rounded-full transition text-sm flex items-center gap-1"
-          >View All <i class="fa-solid fa-chevron-right text-xs"></i
-        ></a>
+        <div onclick="filterProducts('all')" class="text-primary font-bold hover:bg-blue-50 px-4 py-1 rounded-full transition text-sm flex items-center gap-1 cursor-pointer">
+            View All <i class="fa-solid fa-chevron-right text-xs"></i>
+        </div>
       </div>
-
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6"
-        id="hot-deals-container"
-      >
-        <!-- Product Cards will be injected here by JS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6" id="hot-deals-container">
+         </div>
+      <div id="hot-deals-empty" class="hidden text-center py-10 w-full col-span-4 text-gray-500 font-bold">
+        No Hot Deals found for this brand.
       </div>
     </section>
 
-    <!-- Recommended Product Section -->
-    <section
-      class="container mx-auto px-4 py-12 bg-white mt-8 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.05)]"
-    >
-
-
-
-      <div
-        class="flex justify-between items-end mb-8 border-b-2 border-gray-100 pb-2"
-      >
-        <h2
-          class="text-3xl font-display font-black italic text-gray-800 uppercase tracking-tight"
-        >
+    <section class="container mx-auto px-4 py-12 bg-white mt-8 rounded-t-3xl shadow-[0_-10px_40px_rgba(0,0,0,0.05)]">
+      <div class="flex justify-between items-end mb-8 border-b-2 border-gray-100 pb-2">
+        <h2 class="text-3xl font-display font-black italic text-gray-800 uppercase tracking-tight">
           <span class="text-primary">Recommended</span> Products
         </h2>
-        <a
-          href="#"
-          class="text-primary font-bold hover:bg-blue-50 px-4 py-1 rounded-full transition text-sm flex items-center gap-1"
-          >View All <i class="fa-solid fa-chevron-right text-xs"></i
-        ></a>
+        <div onclick="filterProducts('all')" class="text-primary font-bold hover:bg-blue-50 px-4 py-1 rounded-full transition text-sm flex items-center gap-1 cursor-pointer">
+            View All <i class="fa-solid fa-chevron-right text-xs"></i>
+        </div>
       </div>
-
-      <div
-        class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6"
-        id="recommended-container"
-      >
-        <!-- Recommended Cards will be injected here by JS -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6" id="recommended-container">
+        </div>
+       <div id="recommended-empty" class="hidden text-center py-10 w-full col-span-3 text-gray-500 font-bold">
+        No Recommended products found for this brand.
       </div>
     </section>
 
-    <!-- Info & Filters Section -->
-    <section class="container mx-auto px-4 py-16 bg-gray-50">
+      <section class="container mx-auto px-4 py-16 bg-gray-168">
       <div class="grid grid-cols-1 lg:grid-cols-3 gap-10">
         <!-- Left: Info -->
         <div class="lg:col-span-2 space-y-6">
@@ -481,7 +326,7 @@
     loop
     muted
     onloadeddata="this.playbackRate = 0.5"
-    class="rounded-2xl shadow-md h-64 w-full md:w-4/6 object-cover"
+    class="rounded-2xl  h-64 w-full md:w-4/6 object-cover"
     style="object-position: center;"
   ></video>
 </div>
@@ -491,7 +336,7 @@
         </div>
 
         <!-- Right: Price Filters -->
-        <div class="space-y-4">
+        <div class="space-y-4 mt-20">
           <h3
             class="text-xl font-display font-bold text-gray-800 mb-4 uppercase"
           >
@@ -549,187 +394,78 @@
       </div>
     </section>
 
-    <!-- Footer (Dark Tech Theme) -->
+
     <footer class="bg-darkBg text-gray-300 pt-16 border-t border-gray-800">
       <div class="container mx-auto px-4 pb-10">
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-10">
-          <!-- Brand & Description -->
           <div>
             <div class="flex items-center gap-2 mb-6">
-        
-      <!-- Logo Image at Bottom -->
-      <img
-        src="/images/phonify_logo.jpg"
-        alt="Phonify Logo"
-        style="border-radius: 25px;"
-        class="h-10 mt-1 opacity-90 group-hover:opacity-100 transition"
-      />
-      
-              <h2
-                class="text-2xl font-display font-black text-white uppercase italic"
-              >
-                Phonify
-              </h2>
+               <img
+                src="/images/phonify_logo.jpg"
+                alt="Phonify"
+                style="border-radius: 25px;"
+                class="h-10 mt-1 opacity-90 transition"
+                onerror="this.src='https://placehold.co/100x100/2563eb/white?text=P'"
+              />
+              <h2 class="text-2xl font-display font-black text-white uppercase italic">Phonify</h2>
             </div>
-           <p class="text-gray-400 text-sm mb-6 leading-relaxed">
-    West Bengal's premier destination for certified pre-owned smartphones. 
-    <span class="text-gray-300 font-semibold">Expertly refurbished • Warranty guaranteed • Loved by thousands</span>
-</p>
-
-            <div
-              class="flex items-center gap-4 mt-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700"
-            >
+            <p class="text-gray-400 text-sm mb-6 leading-relaxed">
+              West Bengal's premier destination for certified pre-owned
+              smartphones.
+              <span class="text-gray-300 font-semibold">Expertly refurbished • Warranty guaranteed</span>
+            </p>
+            <div class="flex items-center gap-4 mt-6 bg-gray-800/50 p-4 rounded-xl border border-gray-700">
               <i class="fa-solid fa-headset text-3xl text-primary"></i>
               <div>
-                <p
-                  class="font-bold text-white text-xs uppercase tracking-wider"
-                >
-                  Support 24/7
-                </p>
-                <p class="text-xl font-display font-bold text-white">
-                  
-                </p>
+                <p class="font-bold text-white text-xs uppercase tracking-wider">Support 24/7</p>
               </div>
             </div>
           </div>
 
-          <!-- Quick Links -->
           <div>
-            <h3
-              class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3"
-            >
-              Quick Links
-            </h3>
+            <h3 class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3">Quick Links</h3>
             <ul class="space-y-3 text-sm">
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >About Us</a
-                >
-              </li>
-              
-           
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Warranty Policy</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Complaint Care</a
-                >
-              </li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">About Us</a></li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Warranty Policy</a></li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Complaint Care</a></li>
+            </ul>
+          </div>
+          
+           <div>
+            <h3 class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3">Policies</h3>
+            <ul class="space-y-3 text-sm">
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Contact Us</a></li>
+              <li><a href="#" class="hover:text-primary hover:pl-2 transition-all block">Terms & Conditions</a></li>
             </ul>
           </div>
 
-          <!-- Policies -->
           <div>
-            <h3
-              class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3"
-            >
-              Policies
-            </h3>
-            <ul class="space-y-3 text-sm">
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Contact Us</a
-                >
-              </li>
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Terms & Conditions</a
-                >
-              </li>
-         
-              <li>
-                <a
-                  href="#"
-                  class="hover:text-primary hover:pl-2 transition-all block"
-                  >Condition Guidelines</a
-                >
-              </li>
-            </ul>
-          </div>
-
-          <!-- Location -->
-          <div>
-            <h3
-              class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3"
-            >
-              Visit Store
-            </h3>
+            <h3 class="font-display font-bold text-white text-lg mb-6 uppercase border-l-4 border-primary pl-3">Visit Store</h3>
             <div class="flex gap-3 mb-6">
-              <div class="mt-1 text-primary">
-                <i class="fa-solid fa-location-dot"></i>
-              </div>
-              <p class="text-sm text-gray-400 leading-relaxed">
-              
-                Barrackpore, Kolkata 700122
-              </p>
+              <div class="mt-1 text-primary"><i class="fa-solid fa-location-dot"></i></div>
+              <p class="text-sm text-gray-400 leading-relaxed">Barrackpore, Kolkata 700122</p>
             </div>
-
             <div class="flex gap-4">
-              <a
-                href="#"
-                class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition"
-                ><i class="fa-brands fa-facebook-f"></i
-              ></a>
-              <a
-                href="#"
-                class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition"
-                ><i class="fa-brands fa-instagram"></i
-              ></a>
-              <a
-                href="#"
-                class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition"
-                ><i class="fa-brands fa-youtube"></i
-              ></a>
+              <a href="#" class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#1877F2] hover:text-white transition"><i class="fa-brands fa-facebook-f"></i></a>
+              <a href="#" class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#E4405F] hover:text-white transition"><i class="fa-brands fa-instagram"></i></a>
+              <a href="#" class="bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center hover:bg-[#FF0000] hover:text-white transition"><i class="fa-brands fa-youtube"></i></a>
             </div>
           </div>
         </div>
       </div>
-
-      <!-- Copyright Bar -->
       <div class="bg-black py-4 border-t border-gray-800">
-        <div
-          class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4"
-        >
-          <p class="text-xs text-gray-500">
-            <span class="text-primary font-bold">Phonify</span> © 2025 All Right
-            Reserved.
-          </p>
-          <div class="flex items-center gap-3">
-            <span
-              class="text-xs text-gray-500 uppercase font-bold tracking-widest"
-              >Secured by</span
-            >
-            <div
-              class="flex gap-2 opacity-80 grayscale hover:grayscale-0 transition"
-            >
-              <i class="fa-brands fa-cc-visa text-white text-xl"></i>
-              <i class="fa-brands fa-cc-mastercard text-white text-xl"></i>
-              <i class="fa-brands fa-google-pay text-white text-xl"></i>
-            </div>
-          </div>
+        <div class="container mx-auto px-4 flex flex-col md:flex-row justify-between items-center gap-4">
+          <p class="text-xs text-gray-500"><span class="text-primary font-bold">Phonify</span> © 2025 All Right Reserved.</p>
         </div>
       </div>
     </footer>
 
-    <!-- JavaScript to Render Cards Dynamically -->
-   <script>
-      // Data mirroring the "Hot Deal" image
+    <script>
+      // 1. DATA WITH 'BRAND' PROPERTY ADDED
       const hotDeals = [
         {
           name: "Realme C21 (3/32GB)",
+          brand: "realme",
           detail: "Cross Blue",
           image: "https://m.media-amazon.com/images/I/71hEzQGO5qL._SX679_.jpg",
           price: 3499,
@@ -737,204 +473,490 @@
           discount: "65% OFF",
           quality: "Mint",
           location: "Barrackpore",
-          left: 88,
-          badgeColor: "bg-blue-600",
+          left: 8,
+        },
+               {
+          name: "Realme GT 7T (12/256GB)",
+          brand: "realme",
+          detail: "IceSense Blue",
+          image: "https://m.media-amazon.com/images/I/71Q9a9CUW0L._SX679_.jpg",
+          price: 30999,
+          oldPrice: 42999,
+          discount: "35% OFF",
+          quality: "Mint",
+          location: "Barrackpore",
+          left: 8,
         },
         {
-          name: "Vivo V29 5G (8/128GB)",
+          name: "Vivo 40 5G (8/128GB)",
+          brand: "vivo",
           detail: "Black India",
-          image: "/images/Vivo V29.jpg",
-          price: 15999,
+          image: "https://m.media-amazon.com/images/I/41cagfIoRRL.jpg", // Updated dummy
+          price: 20999,
           oldPrice: 32999,
           discount: "52% OFF",
           quality: "Super Mint",
           location: "Barrackpore",
-          left: 23,
-          badgeColor: "bg-primary",
+          left: 13,
         },
         {
-          name: "Vivo Y75 5G (8/128GB)",
+          name: "Vivo 40FE (8/256GB)",
+          brand: "vivo",
           detail: "Glowing Galaxy",
-          image: "/images/Vivo Y75.png",
-          price: 7999,
-          oldPrice: 25990,
+          image: "https://m.media-amazon.com/images/I/41C430pjMWL._SY300_SX300_QL70_FMwebp_.jpg", // Updated dummy
+          price: 47999,
+          oldPrice: 50990,
           discount: "69% OFF",
           quality: "Mint",
           location: "Barrackpore",
-          left: 52,
-          badgeColor: "bg-primary",
+          left: 5,
         },
         {
-          name: "Realme P1 Pro 5G",
-          detail: "Phoenix Red",
-          image: "/images/Realme-P1-Pro.webp",
-          price: 12499,
-          oldPrice: 24999,
-          discount: "50% OFF",
+          name: "iPhone 17 Pro Max 2 TB",
+          brand: "apple",
+          detail: "Deep Blue",
+          image: "https://m.media-amazon.com/images/I/31Bn8sQI3xL._SX342_SY445_QL70_FMwebp_.jpg",
+          price: 169999,
+          oldPrice: 229000,
+          discount: "63% OFF",
           quality: "Mint",
           location: "BARRACKPORE",
-          left: 40,
-          badgeColor: "bg-primary",
+          save: "₹82901 Off",
         },
+        {
+          name: "Realme NARZO 80 Lite",
+          brand: "realme",
+          detail: "Crystal Purple",
+          image: "https://m.media-amazon.com/images/I/71Vjn1DfArL._SX679_.jpg", // Updated dummy
+          price: 6450,
+          oldPrice: 10498,
+          discount: "30% OFF",
+          quality: "Mint",
+          location: "BARRACKPORE",
+          left: 4,
+        },
+        // Added dummy items to ensure other brands have results
+        {
+          name: "Oppo Find X9 Pro ",
+          brand: "oppo",
+          detail: "Titanium Charcoal",
+          image: "https://m.media-amazon.com/images/I/71NqN92-ilL._SX679_.jpg",
+          price: 85000,
+          oldPrice: 109000,
+          discount: "35% OFF",
+          quality: "Good",
+          location: "BARRACKPORE",
+          left: 5,
+        },
+        {
+          name: "Xiaomi 14 ",
+          brand: "xiaomi",
+          detail: "Civi Panda White",
+          image: "https://m.media-amazon.com/images/I/4166f5DXEEL._SY300_SX300_QL70_FMwebp_.jpg",
+          price: 11999,
+          oldPrice: 18999,
+          discount: "37% OFF",
+          quality: "Like New",
+          location: "BARRACKPORE",
+          left: 10,
+        },
+          {
+    name: "Samsung Galaxy Z Flip7 FE",
+    brand: "samsung",
+    detail: "5G (12/512GB)",
+    image: "https://m.media-amazon.com/images/I/61L+eT+cG+L._SX679_.jpg", 
+    price: 89999,
+    oldPrice: 109999,
+    discount: "38% OFF",
+    quality: "Good",
+    location: "BARRACKPORE",
+    save: "₹42000 Off",
+  },
+  {
+    name: "Samsung Galaxy A55 5G",
+    brand: "samsung",
+    detail: "5G (8/128GB)",
+    image: "https://m.media-amazon.com/images/I/41ASR9mjFTL._SY300_SX300_QL70_FMwebp_.jpg",
+    price: 24999,
+    oldPrice: 39999,
+    discount: "37% OFF",
+    quality: "Good",
+    location: "BARRACKPORE",
+    save: "₹15000 Off",
+  },
+   {
+    name: "Samsung Galaxy S23 FE",
+    brand: "samsung",
+    detail: "5G (8/128GB)",
+    image: "https://m.media-amazon.com/images/I/71qGismu6NL._SX679_.jpg",
+    price: 29999,
+    oldPrice: 79999,
+    discount: "62% OFF",
+    quality: "Super Mint",
+    location: "BARRACKPORE",
+    save: "₹50000 Off",
+  },
       ];
 
-      // Data mirroring "Recommended" image
       const recommended = [
+         {
+          name: "Realme P4 pro 5G (8/128GB)",
+          brand: "realme",
+          detail: "Birch Wood",
+          image: "https://m.media-amazon.com/images/I/51xgbmXJAnL._SY300_SX300_QL70_FMwebp_.jpg",
+          price: 17899,
+          oldPrice: 29799,
+          discount: "25% OFF",
+          quality: "Mint",
+          location: "Barrackpore",
+          left: 8,
+        },
+               {
+          name: "Realme GT 7T (12/256GB)",
+          brand: "realme",
+          detail: "IceSense Blue",
+          image: "https://m.media-amazon.com/images/I/71Q9a9CUW0L._SX679_.jpg",
+          price: 30999,
+          oldPrice: 42999,
+          discount: "35% OFF",
+          quality: "Mint",
+          location: "Barrackpore",
+          left: 8,
+        },
+          {
+          name: "Vivo V60  (8/256GB)",
+          brand: "vivo",
+          detail: "Moonlit Blue",
+          image: "https://m.media-amazon.com/images/I/41JQnK4CqqL._SY300_SX300_QL70_FMwebp_.jpg", // Updated dummy
+          price: 27999,
+          oldPrice: 45999,
+          discount: "49% OFF",
+          quality: "Mint",
+          location: "Barrackpore",
+          left: 5,
+        },
         {
-          name: "OnePlus Nord CE",
-          detail: "(6/128GB) Charcoal",
-          image: "https://m.media-amazon.com/images/I/71LRBr1aLNS._SX679_.jpg",
-          price: 9000,
-          oldPrice: 22999,
+          name: "OnePlus 15",
+          brand: "oneplus",
+          detail: "(16/512GB) Sand Storm",
+          image: "https://m.media-amazon.com/images/I/41Z3zn7d+JL._SY300_SX300_QL70_FMwebp_.jpg",
+          price: 59000,
+          oldPrice: 79999,
           discount: "61% OFF",
           quality: "Mint",
           location: "BARRACKPORE",
-          save: "₹13999 Off",
-          badgeColor: "bg-primary",
+          save: "₹18999 Off",
+        },
+          {
+          name: "Apple iPhone 15 ",
+          brand: "apple",
+          detail: "(128GB) Black",
+          image: "https://m.media-amazon.com/images/I/71657TiFeHL._SL1500_.jpg",
+          price: 49999,
+          oldPrice: 79900,
+          discount: "43% OFF",
+          quality: "Mint",
+          location: "BARRACKPORE",
+          save: "₹82901 Off",
+        },  {
+          name: "iPhone 17 Pro Max 2 TB",
+          brand: "apple",
+          detail: "Deep Blue",
+          image: "https://m.media-amazon.com/images/I/31Bn8sQI3xL._SX342_SY445_QL70_FMwebp_.jpg",
+          price: 169999,
+          oldPrice: 229000,
+          discount: "63% OFF",
+          quality: "Mint",
+          location: "BARRACKPORE",
+          save: "₹82901 Off",
         },
         {
           name: "iPhone 11 Pro",
+          brand: "apple",
           detail: "(64GB) Midnight",
           image: "https://m.media-amazon.com/images/I/61tuQdl2yLL._SX679_.jpg",
           price: 16999,
           oldPrice: 99900,
           discount: "83% OFF",
           quality: "Mint",
-          location: "NABADWIP",
+          location: "BARRACKPORE",
           save: "₹82901 Off",
-          badgeColor: "bg-primary",
         },
         {
-          name: "Samsung Galaxy A25",
+          name: "Samsung Galaxy A55 5G ",
+          brand: "samsung",
           detail: "5G (8/256GB)",
-          image: "/images/Samsung Galaxy A25.png",
-          price: 13999,
-          oldPrice: 31499,
+          image: "https://m.media-amazon.com/images/I/41ASR9mjFTL._SY300_SX300_QL70_FMwebp_.jpg", // Updated dummy
+          price: 20999,
+          oldPrice: 40499,
           discount: "56% OFF",
           quality: "Super Mint",
           location: "BARRACKPORE",
-          save: "₹17500 Off",
-          badgeColor: "bg-primary",
+          save: "₹18500 Off",
         },
+
+
+  {
+    name: "Samsung Galaxy S24 Ultra",
+    brand: "samsung",
+    detail: "5G (12/256GB)",
+    image: "https://m.media-amazon.com/images/I/41X9qNxoJKL._SY300_SX300_QL70_FMwebp_.jpg", 
+    price: 94999,
+    oldPrice: 134999,
+    discount: "30% OFF",
+    quality: "Super Mint",
+    location: "BARRACKPORE",
+    save: "₹40000 Off",
+  },
+
+  {
+    name: "Samsung Galaxy M55 5G",
+    brand: "samsung",
+    detail: "5G (8/256GB)",
+    image: "https://m.media-amazon.com/images/I/41bbNrwkZUL._SY300_SX300_QL70_FMwebp_.jpg",
+    price: 19999,
+    oldPrice: 32999,
+    discount: "39% OFF",
+    quality: "Super Mint",
+    location: "BARRACKPORE",
+    save: "₹13000 Off",
+  },
+  {
+    name: "Samsung Galaxy F55 5G",
+    brand: "samsung",
+    detail: "5G (12/256GB)",
+    image: "https://m.media-amazon.com/images/I/416yKeZMZ7L._SY300_SX300_QL70_FMwebp_.jpg",
+    price: 18499,
+    oldPrice: 28999,
+    discount: "36% OFF",
+    quality: "Good",
+    location: "BARRACKPORE",
+    save: "₹10500 Off",
+  },
+ 
+
+
+         {
+          name: "iPhone 13",
+          brand: "apple",
+          detail: "128GB Blue",
+          image: "https://m.media-amazon.com/images/I/71xb2xkN5qL._AC_SL1500_.jpg",
+          price: 38999,
+          oldPrice: 69900,
+          discount: "45% OFF",
+          quality: "Open Box",
+          location: "BARRACKPORE",
+          save: "₹30901 Off",
+        },
+        {
+          name: "Samsung Galaxy S25 Ultra ",
+          brand: "samsung",
+          detail: "5G (12/512GB)",
+          image: "https://m.media-amazon.com/images/I/71-d7XDbhIL._SX679_.jpg",
+          price: 89999,
+          oldPrice: 129999,
+          discount: "64% OFF",
+          quality: "Good",
+          location: "BARRACKPORE",
+          save: "₹40000 Off",
+        }
       ];
 
-      // Render Hot Deals
-      const hotDealsContainer = document.getElementById("hot-deals-container");
-      hotDeals.forEach((product) => {
-        // I added a URL parameter (product=Name) so you can identify which phone was clicked
-        const card = `
-                <a href="productDetails.html?product=${encodeURIComponent(product.name)}" class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full block">
-                    
-                    <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1">
-                        ${product.discount}
-                    </span>
+      // Global variables to track current state
+      let currentBrand = 'all';
+      let currentSearchQuery = '';
 
-                    <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
-                         <img src="${product.image}" alt="${
-          product.name
-        }" class="h-full object-contain group-hover:scale-105 transition duration-500 drop-shadow-md">
-                    </div>
+      // 2. MAIN FILTER FUNCTION
+      function filterProducts(selectedBrand) {
+        currentBrand = selectedBrand;
+        
+        // A. Highlight the selected Button
+        const buttons = document.querySelectorAll('.brand-btn');
+        buttons.forEach(btn => btn.classList.remove('brand-active'));
+        
+        const activeBtn = document.getElementById(`btn-${selectedBrand}`);
+        if(activeBtn) {
+            activeBtn.classList.add('brand-active');
+        } else {
+            // Fallback for 'all' if clicked from View All link
+             document.getElementById(`btn-all`).classList.add('brand-active');
+        }
 
-                    <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
-                        <div class="mb-3">
-                            <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase">
-                                ${product.name}
+        // Apply both brand and search filters
+        applyFilters();
+      }
+
+      // 3. SEARCH FUNCTION
+      function searchProducts() {
+        // Get search query from both desktop and mobile inputs
+        const desktopInput = document.getElementById('searchInput');
+        const mobileInput = document.getElementById('mobileSearchInput');
+        
+        currentSearchQuery = desktopInput ? desktopInput.value.toLowerCase() : 
+                            mobileInput ? mobileInput.value.toLowerCase() : '';
+        
+        // Apply both brand and search filters
+        applyFilters();
+      }
+
+      // 4. COMBINED FILTER FUNCTION
+      function applyFilters() {
+        // B. Filter Arrays based on brand and search query
+        const filteredHotDeals = hotDeals.filter(p => {
+          const brandMatch = currentBrand === 'all' || p.brand === currentBrand;
+          const searchMatch = !currentSearchQuery || 
+            p.name.toLowerCase().includes(currentSearchQuery) || 
+            p.detail.toLowerCase().includes(currentSearchQuery) ||
+            p.brand.toLowerCase().includes(currentSearchQuery);
+          return brandMatch && searchMatch;
+        });
+
+        const filteredRecommended = recommended.filter(p => {
+          const brandMatch = currentBrand === 'all' || p.brand === currentBrand;
+          const searchMatch = !currentSearchQuery || 
+            p.name.toLowerCase().includes(currentSearchQuery) || 
+            p.detail.toLowerCase().includes(currentSearchQuery) ||
+            p.brand.toLowerCase().includes(currentSearchQuery);
+          return brandMatch && searchMatch;
+        });
+
+        // C. Render Hot Deals
+        const hotDealsContainer = document.getElementById("hot-deals-container");
+        const hotDealsEmpty = document.getElementById("hot-deals-empty");
+        hotDealsContainer.innerHTML = ""; // Clear existing
+
+        if(filteredHotDeals.length === 0) {
+            hotDealsContainer.classList.add("hidden");
+            hotDealsEmpty.classList.remove("hidden");
+        } else {
+            hotDealsContainer.classList.remove("hidden");
+            hotDealsEmpty.classList.add("hidden");
+            
+            filteredHotDeals.forEach((product) => {
+                const highlightedName = highlightText(product.name, currentSearchQuery);
+                const highlightedDetail = highlightText(product.detail, currentSearchQuery);
+                
+                const card = `
+                    <a href="productDetails.html?product=${encodeURIComponent(product.name)}" class="bg-white rounded-xl shadow-sm hover:shadow-2xl transition duration-300 border border-gray-100 overflow-hidden relative group flex flex-col h-full block">
+                        <span class="absolute top-0 right-0 bg-green-500 text-white text-[11px] font-black uppercase tracking-wider badge-sport z-10 shadow-sm py-1">
+                            ${product.discount}
+                        </span>
+                        <div class="h-48 flex items-center justify-center p-6 bg-white relative group-hover:bg-blue-50/30 transition">
+                             <img src="${product.image}" alt="${product.name}" class="h-full object-contain group-hover:scale-105 transition duration-500 drop-shadow-md">
+                        </div>
+                        <div class="p-4 border-t border-gray-50 flex flex-col flex-grow">
+                            <div class="mb-3">
+                                <h3 class="font-display font-bold text-gray-900 text-lg leading-tight uppercase">
+                                    ${highlightedName}
+                                </h3>
+                                 <p class="text-xs text-gray-500 font-medium">${highlightedDetail}</p>
+                            </div>
+                            <div class="space-y-2 mb-3">
+                                ${product.left ? `
+                                <div class="flex items-center">
+                                    <span class="bg-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide transform -skew-x-12 inline-block">
+                                        <i class="fa-solid fa-fire text-[9px] mr-1"></i> left ${product.left}
+                                    </span>
+                                </div>` : ""}
+                                <div class="flex items-center text-xs font-semibold">
+                                    <span class="text-gray-400 mr-1">Quality:</span>
+                                    <span class="text-primary uppercase tracking-wide">${product.quality}</span>
+                                </div>
+                                <div>
+                                    <span class="bg-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider inline-block">
+                                        <i class="fa-solid fa-map-pin mr-1"></i> ${product.location}
+                                    </span>
+                                </div>
+                            </div>
+                            <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
+                                <span class="text-2xl font-display font-black text-primary">₹${product.price}</span>
+                                <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹${product.oldPrice}</span>
+                            </div>
+                        </div>
+                    </a>
+                `;
+                hotDealsContainer.innerHTML += card;
+            });
+        }
+
+        // D. Render Recommended
+        const recContainer = document.getElementById("recommended-container");
+        const recEmpty = document.getElementById("recommended-empty");
+        recContainer.innerHTML = ""; // Clear existing
+
+        if(filteredRecommended.length === 0) {
+            recContainer.classList.add("hidden");
+            recEmpty.classList.remove("hidden");
+        } else {
+            recContainer.classList.remove("hidden");
+            recEmpty.classList.add("hidden");
+
+            filteredRecommended.forEach((product) => {
+                const highlightedName = highlightText(product.name, currentSearchQuery);
+                const highlightedDetail = highlightText(product.detail, currentSearchQuery);
+                
+                const card = `
+                    <a href="productDetails.html?product=${encodeURIComponent(product.name)}" class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 overflow-hidden relative group flex block">
+                        <span class="absolute top-0 left-0 bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded-br-lg z-10 uppercase tracking-widest">
+                            ${product.discount}
+                        </span>
+                        <div class="w-1/3 p-2 bg-white flex items-center justify-center">
+                             <img src="${product.image}" alt="${product.name}" class="max-h-32 max-w-full object-contain drop-shadow-sm">
+                        </div>
+                        <div class="w-2/3 p-4 flex flex-col justify-center">
+                            <h3 class="font-display font-bold text-gray-900 text-base leading-tight uppercase mb-1">
+                                ${highlightedName}
                             </h3>
-                             <p class="text-xs text-gray-500 font-medium">${
-                               product.detail
-                             }</p>
-                        </div>
-                        
-                        <div class="space-y-2 mb-3">
-                            ${
-                              product.left
-                                ? `
-                            <div class="flex items-center">
-                                <span class="bg-yellow-400 text-black text-[10px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wide transform -skew-x-12 inline-block">
-                                    <i class="fa-solid fa-fire text-[9px] mr-1"></i> left ${product.left}
-                                </span>
-                            </div>`
-                                : ""
-                            }
-                            
-                            <div class="flex items-center text-xs font-semibold">
-                                <span class="text-gray-400 mr-1">Quality:</span>
-                                <span class="text-primary uppercase tracking-wide">${
-                                  product.quality
-                                }</span>
-                            </div>
-
-                            <div>
-                                <span class="bg-gray-800 text-white text-[9px] font-bold px-2 py-0.5 rounded-sm uppercase tracking-wider inline-block">
-                                    <i class="fa-solid fa-map-pin mr-1"></i> ${
-                                      product.location
-                                    }
-                                </span>
+                             <p class="text-xs text-gray-500 font-medium mb-2">${highlightedDetail}</p>
+                            ${product.save ? `<div class="mb-2"><span class="bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-sm inline-block transform -skew-x-12 shadow-sm">SAVE ${product.save}</span></div>` : ""}
+                            <div class="flex justify-between items-end mt-2">
+                                <div class="flex flex-col">
+                                    <span class="text-lg font-display font-black text-gray-900">₹${product.price}</span>
+                                    <span class="text-xs font-bold text-gray-400 line-through">₹${product.oldPrice}</span>
+                                </div>
+                                 <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-primaryDark shadow-md transition hover:scale-110">
+                                    <i class="fa-solid fa-plus"></i>
+                                </div>
                             </div>
                         </div>
+                    </a>
+                `;
+                recContainer.innerHTML += card;
+            });
+        }
+      }
 
-                        <div class="mt-auto pt-3 border-t border-gray-100 flex items-end gap-2">
-                            <span class="text-2xl font-display font-black text-primary">₹${
-                              product.price
-                            }</span>
-                            <span class="text-sm font-bold text-gray-400 line-through mb-1.5">₹${
-                              product.oldPrice
-                            }</span>
-                        </div>
-                    </div>
-                </a>
-            `;
-        hotDealsContainer.innerHTML += card;
-      });
+      // 5. TEXT HIGHLIGHTING FUNCTION
+      function highlightText(text, query) {
+        if (!query) return text;
+        
+        const regex = new RegExp(`(${query})`, 'gi');
+        return text.replace(regex, '<span class="highlight">$1</span>');
+      }
 
-      // Render Recommended
-      const recContainer = document.getElementById("recommended-container");
-      recommended.forEach((product) => {
-         // I added a URL parameter (product=Name) here as well
-        const card = `
-                 <a href="productDetails.html?product=${encodeURIComponent(product.name)}" class="bg-white rounded-xl shadow-sm hover:shadow-xl transition duration-300 border border-gray-100 overflow-hidden relative group flex block">
-                    
-                    <span class="absolute top-0 left-0 bg-green-500 text-white text-[10px] font-black px-2 py-1 rounded-br-lg z-10 uppercase tracking-widest">
-                        ${product.discount}
-                    </span>
-
-                    <div class="w-1/3 p-2 bg-white flex items-center justify-center">
-                         <img src="${product.image}" alt="${
-          product.name
-        }" class="max-h-32 max-w-full object-contain drop-shadow-sm">
-                    </div>
-
-                    <div class="w-2/3 p-4 flex flex-col justify-center">
-                        <h3 class="font-display font-bold text-gray-900 text-base leading-tight uppercase mb-1">
-                            ${product.name}
-                        </h3>
-                         <p class="text-xs text-gray-500 font-medium mb-2">${
-                           product.detail
-                         }</p>
-                        
-                        ${
-                          product.save
-                            ? `<div class="mb-2"><span class="bg-orange-500 text-white text-[10px] font-bold px-2 py-0.5 rounded-sm inline-block transform -skew-x-12 shadow-sm">SAVE ${product.save}</span></div>`
-                            : ""
-                        }
-                        
-                        <div class="flex justify-between items-end mt-2">
-                            <div class="flex flex-col">
-                                <span class="text-lg font-display font-black text-gray-900">₹${
-                                  product.price
-                                }</span>
-                                <span class="text-xs font-bold text-gray-400 line-through">₹${
-                                  product.oldPrice
-                                }</span>
-                            </div>
-                             <div class="bg-primary text-white w-8 h-8 rounded-full flex items-center justify-center hover:bg-primaryDark shadow-md transition hover:scale-110">
-                                <i class="fa-solid fa-plus"></i>
-                            </div>
-                        </div>
-                    </div>
-                </a>
-            `;
-        recContainer.innerHTML += card;
+      // 6. Initialize on Load
+      document.addEventListener("DOMContentLoaded", () => {
+          filterProducts('all');
+          
+          // Add event listeners for Enter key in search inputs
+          const desktopInput = document.getElementById('searchInput');
+          const mobileInput = document.getElementById('mobileSearchInput');
+          
+          if (desktopInput) {
+            desktopInput.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') {
+                searchProducts();
+              }
+            });
+          }
+          
+          if (mobileInput) {
+            mobileInput.addEventListener('keypress', (e) => {
+              if (e.key === 'Enter') {
+                searchProducts();
+              }
+            });
+          }
       });
     </script>
   </body>
